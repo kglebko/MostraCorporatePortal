@@ -1,0 +1,367 @@
+.news-block{
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.main-post{
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  border: 1px solid var(--light-gray);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.news-photo{
+width: 100%;
+flex: 1;
+object-fit: cover;
+border-radius: 15px 15px 0 0;
+}
+
+.news-info{
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+}
+
+.news-date{
+  font-size: 14px;
+  color: var(--blue-gray);
+  font-weight: 400;
+}
+
+
+.news-list{
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  row-gap: 8px;
+}
+
+.list-item{
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--light-gray);
+  border-radius: 15px;
+  row-gap: 4px;
+}
+
+.polls{
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.poll{
+  display: flex;
+  align-items: flex-start;
+  column-gap: 12px;
+}
+
+.poll-info{
+  display:flex;
+  flex-direction: column;
+  row-gap: 4px;
+}
+
+.poll-status-0{
+  font-size: 14px;
+  color: var(--primary-orange);
+}
+
+.poll-status-1{
+  font-size: 14px;
+  color: var(--blue-gray);
+  font-weight: 400;
+}
+
+.marker-icon{
+  width: 8px;
+}
+
+.birthdays{
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.birthdays-today{
+  display:flex;
+  flex-direction: column;
+  row-gap:20px;
+}
+
+.birthday-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.birthday-block {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.birthday-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.birthday-age {
+  position: absolute;
+
+  width: 28px;
+  height: 28px;
+
+  bottom: 0;
+  left: 0;
+
+  transform: translate(-25%, 25%);
+
+  background: var(--dark-blue);
+  color: var(--white);
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  /*box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);*/
+}
+
+.birthday-person {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--blue-gray);
+}
+
+.birthday-person:hover{
+  color: var(--primary-orange);
+}
+
+.events{
+  display: flex;
+  column-gap: 40px;
+}
+
+.events-list{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.event-date{
+  font-weight: 600;
+  color: var(--primary-orange);
+}
+
+.event-description{
+  color: var(--blue-gray);
+  font-weight: 400;
+}
+
+.event-description:hover{
+  color: var(--primary-orange);
+}
+
+.calendar {
+  min-width: 240px;
+}
+
+.calendar-month {
+  margin-bottom: 16px;
+  text-transform: capitalize;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 12px;
+  color: var(--blue-gray);
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  column-gap: 6px;
+  row-gap: 8px;
+}
+
+.calendar-day {
+  position: relative;
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: 50%;
+}
+
+.calendar-day.today {
+  background: var(--primary-orange);
+  color: white;
+}
+
+.calendar-day.has-event .event-dot {
+  position: absolute;
+  bottom: 4px;
+  width: 4px;
+  height: 4px;
+  background: var(--primary-orange);
+  border-radius: 50%;
+}
+
+.tasks{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tasks-block{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tasks{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task{
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.task-title{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-date{
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--blue-gray);
+}
+
+.block-title{
+  font-weight: 600;
+  color: var(--blue-gray);
+}
+
+.progress {
+  position: relative;
+  width: 100%;
+  height: 18px;
+  background: var(--light-gray);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  position: absolute;
+  height: 100%;
+  border-radius: 15px;
+  background: var(--primary-orange);
+  left: 0;
+  top: 0;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to right,
+    var(--white) 0%,
+    var(--white) var(--progress-width, 0%),
+    var(--primary-orange) var(--progress-width, 0%),
+    var(--primary-orange) 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.game{
+  background-color: var(--primary-orange);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  border-radius: 15px;
+  border: 1px solid var(--light-gray);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+}
+
+.game-block{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.game-logo{
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.game-title-text{
+  color: var(--white);
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.game a {
+  color: var(--white);
+  transition: 0.4s ease-in-out; 
+}
+
+.game a:hover {
+  color: var(--dark-blue);
+  transform: translateY(-2px);
+  transition: 0.4s ease-in-out;
+  cursor: pointer;
+}
+

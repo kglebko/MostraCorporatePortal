@@ -1,0 +1,98 @@
+@import './base.css';
+
+#app {
+  width: 100%;
+  padding-top: 2rem;
+}
+
+#main{
+  /* max-width: 1520px; */
+  margin: 0 10rem;
+}
+
+a{
+  text-decoration: none;
+  color: var(--dark-blue);
+  transition: 0.4s ease-in-out;
+  padding: 2px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+h2{
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--blue-gray);
+}
+
+.page-title{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  gap: 0.5rem;
+}
+
+.search-bar {
+  position: relative;
+  width: 320px;
+  margin-bottom: 2rem;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px 16px 12px 40px;
+  border: 1px solid var(--light-gray);
+  border-radius: 50px;
+  outline: none;
+  transition: border 0.4s, box-shadow 0.4s;
+  font-size: 14px;
+  font-family: 'TT Travels';
+  color: var(--dark-gray);
+}
+
+.search-bar input:focus {
+  border: 1px solid var(--primary-orange);
+  box-shadow: 0 0 2px 2px rgba(246, 112, 1, 0.10);
+}
+
+.dashboard{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  gap: 24px;
+}
+
+.dashboard-container{
+  display: flex;
+  column-gap: 24px;
+}
+
+.dashboard-columns{
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.dashboard-row{
+  display: flex;
+  column-gap: 24px;
+  /*max-height: 300px;*/
+}
+
+@media (hover: hover) {
+  a:hover {
+    color: var(--primary-orange);
+    transform: translateY(-2px);
+    transition: 0.4s ease-in-out;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+  }
+}

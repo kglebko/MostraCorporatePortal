@@ -1,0 +1,14 @@
+# Vue
+node_modules/
+dist/
+
+# .NET
+bin/
+obj/
+
+# IDE
+.idea/
+.vs/
+
+# System
+.DS_Store

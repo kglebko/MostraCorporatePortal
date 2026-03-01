@@ -1,0 +1,61 @@
+:root {
+  --primary-orange: #f67001;
+  --dark-blue: #002b45;
+  --blue-gray: #3f4d58;
+  --light-gray: #dfdfdf;
+  --white: #ffffff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--white);
+  color: var(--dark-blue);
+  word-break: normal;
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.2;
+  font-family: 'TT Travels', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'TT Travels';
+  src: url('fonts/TTTravels-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TT Travels';
+  src: url('fonts/TTTravels-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TT Travels';
+  src: url('fonts/TTTravels-DemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TT Travels';
+  src: url('fonts/TTTravels-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
