@@ -43,7 +43,8 @@ public class CollaboratorsController : ControllerBase
                 Email = c.Email,
                 MobilePhone = c.MobilePhone,
                 InternalPhone = c.InternalPhone,
-                CreatedAt = c.CreatedAt
+                CreatedAt = c.CreatedAt,
+                Photo = c.Photo
             })
             .ToListAsync();
 
@@ -73,7 +74,8 @@ public class CollaboratorsController : ControllerBase
                 Email = c.Email,
                 MobilePhone = c.MobilePhone,
                 InternalPhone = c.InternalPhone,
-                CreatedAt = c.CreatedAt
+                CreatedAt = c.CreatedAt,
+                Photo = c.Photo
             })
             .FirstOrDefaultAsync(c => c.Id == id);
 
@@ -103,9 +105,11 @@ public async Task<IActionResult> Create([FromBody] CreateCollaboratorDto dto)
         UserName = dto.Username,
         NormalizedUserName = dto.Username.ToUpper(),
         Email = dto.Email,
+        NormalizedEmail = dto.Email.ToUpper(),
         MobilePhone = dto.MobilePhone,
         InternalPhone = dto.InternalPhone,
-        CreatedAt = DateTime.UtcNow
+        CreatedAt = DateTime.UtcNow,
+        Photo = dto.Photo
     };
     
     collaborator.PasswordHash = _passwordHasher.HashPassword(collaborator, dto.Password);

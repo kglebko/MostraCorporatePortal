@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <!-- Identity с EF Core 8 -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
     
     <!-- EF Core -->

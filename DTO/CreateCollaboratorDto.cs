@@ -21,4 +21,5 @@ public class CreateCollaboratorDto
 
     public string? MobilePhone { get; set; }
     public string? InternalPhone { get; set; }
+    public string? Photo { get; set; }
 }
