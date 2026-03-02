@@ -14,6 +14,7 @@ export interface CollaboratorDto {
   mobilePhone?: string
   internalPhone?: string
   createdAt: string
+  photo: string
 }
 
 export interface CreateCollaboratorDto {
@@ -30,6 +31,7 @@ export interface CreateCollaboratorDto {
   email: string
   mobilePhone?: string
   internalPhone?: string
+  photo?: string
 }
 
 class CollaboratorsService {

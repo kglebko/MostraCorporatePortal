@@ -2,7 +2,7 @@ import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import authService from './authService'
 
-const API_BASE_URL = 'https://localhost:7001/api'
+const API_BASE_URL = 'https://localhost:5078/api'
 
 class ApiService {
   private axiosInstance: AxiosInstance
@@ -12,7 +12,8 @@ class ApiService {
       baseURL: API_BASE_URL,
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true 
     })
 
     // Интерцептор для добавления токена к каждому запросу

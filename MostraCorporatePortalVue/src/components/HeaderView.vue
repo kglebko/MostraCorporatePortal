@@ -1,26 +1,28 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import apiService from '@/services/apiService'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
+const isMenuOpen = ref(false)
+const menuRef = ref<HTMLElement | null>(null)
+
+interface ServerUser {
+  id: string
+  fullName: string
+  photo?: string
+}
+
+const currentUser = ref<{ id: string; firstName: string; lastName: string; photo: string } | null>(null)
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
 
 const logout = async () => {
   isMenuOpen.value = false
   await authStore.logout()
-}
-
-const currentUser = {
-  id: 15,
-  fullName: 'Константин Глебко',
-  photo: new URL('../assets/images/profile_foto.png', import.meta.url).href
-}
-
-const isMenuOpen = ref(false)
-const menuRef = ref<HTMLElement | null>(null)
-
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
 }
 
 const handleClickOutside = (event: MouseEvent) => {
@@ -29,8 +31,27 @@ const handleClickOutside = (event: MouseEvent) => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   document.addEventListener('click', handleClickOutside)
+
+  try {
+    const user = await apiService.get<ServerUser>('/profile')
+    // Разбиваем fullName на фамилию и имя
+    const nameParts = user.fullName.trim().split(' ')
+    const lastName = nameParts[0] || ''
+    const firstName = nameParts[1] || ''
+
+    currentUser.value = {
+      id: user.id,
+      firstName,
+      lastName,
+      photo: user.photo
+        ? `https://localhost:5078/images/collaborators_photo/${user.photo}`
+        : new URL('../assets/images/profile_photo.png', import.meta.url).href
+    }
+  } catch (err) {
+    console.error('Не удалось загрузить профиль:', err)
+  }
 })
 
 onBeforeUnmount(() => {
@@ -41,29 +62,29 @@ onBeforeUnmount(() => {
 <template>
   <header>
     <div>
-      <RouterLink :to="{ name: 'home'}">
+      <RouterLink :to="{ name: 'home' }">
         <img alt="logo" class="logo" src="@/assets/logo.svg" />
       </RouterLink>
     </div>
 
     <div>
       <nav>
-        <RouterLink :to="{ name: 'home'}">Главная</RouterLink>
-        <RouterLink :to="{ name: 'corporateLife'}">Корпоративная жизнь</RouterLink>
-        <RouterLink :to="{ name: 'training'}">Обучение</RouterLink>
-        <RouterLink :to="{ name: 'events'}">События</RouterLink>
-        <RouterLink :to="{ name: 'forNew'}">Новичку</RouterLink>
-        <RouterLink :to="{ name: 'employees'}">Сотрудники</RouterLink>
+        <RouterLink :to="{ name: 'home' }">Главная</RouterLink>
+        <RouterLink :to="{ name: 'corporateLife' }">Корпоративная жизнь</RouterLink>
+        <RouterLink :to="{ name: 'training' }">Обучение</RouterLink>
+        <RouterLink :to="{ name: 'events' }">События</RouterLink>
+        <RouterLink :to="{ name: 'forNew' }">Новичку</RouterLink>
+        <RouterLink :to="{ name: 'employees' }">Сотрудники</RouterLink>
       </nav>
     </div>
 
-    <div class="user_block" ref="menuRef">
+    <div class="user_block" ref="menuRef" v-if="currentUser">
       <RouterLink 
         :to="{ name: 'employeeDetails', params: { id: currentUser.id } }"
         class="user_info"
       >
-        <p class="namelabel">{{ currentUser.fullName }}</p>
-        <img class="profile_photo" :src="currentUser.photo" />
+        <p class="namelabel">{{ currentUser.firstName }} {{ currentUser.lastName }}</p>
+        <img class="profile_photo" :src="currentUser.photo" alt="Фото сотрудника"/>
       </RouterLink>
 
       <button class="menu_btn" @click.stop="toggleMenu">
@@ -103,7 +124,7 @@ header {
   height: 40px;
   width: 40px;
   object-fit: cover;
-  border-radius: 50px;
+  border-radius: 50%;
 }
 
 nav {
@@ -173,11 +194,10 @@ nav {
   border: none;
   text-align: left;
   cursor: pointer;
-  font-size: 14px;
   font-family: 'TT Travels', sans-serif;
   font-weight: 500;
   font-size: 16px;
-  color: var(--dark-blue);
+  color: var(--primary-orange);
 }
 
 .dropdown_item:hover {
@@ -188,5 +208,4 @@ nav {
 nav a.router-link-exact-active {
   color: var(--primary-orange);
 }
-
 </style>

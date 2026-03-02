@@ -70,7 +70,7 @@ const courses = [
               <div class="news-block">
 
                 <div class="main-post">
-                  <img class="news-photo" src="../assets/images/news_photos/news1.png">
+                  <img class="news-photo" src="../assets/images/news_photos/news2.png">
                   <div class="news-info">
                     <a>Внедрены изменения в процессы внутреннего взаимодействия команд для  ускорения рабочих процессов</a>
                     <p class="news-date">6 февраля 2026 г.</p>

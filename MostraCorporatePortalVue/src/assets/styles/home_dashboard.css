@@ -11,13 +11,15 @@
   border: 1px solid var(--light-gray);
   border-radius: 15px;
   overflow: hidden;
+  height: fit-content;
 }
 
-.news-photo{
-width: 100%;
-flex: 1;
-object-fit: cover;
-border-radius: 15px 15px 0 0;
+.news-photo {
+  width: 100%;
+  height: 200px;  
+  object-fit: cover;
+  display: block;
+  border-radius: 15px 15px 0 0;
 }
 
 .news-info{
@@ -33,14 +35,14 @@ border-radius: 15px 15px 0 0;
   font-weight: 400;
 }
 
-
-.news-list{
+.news-list {
   display: flex;
   flex-direction: column;
   width: 45%;
-  row-gap: 8px;
+  height: 100%;      
+  gap: 8px;
+  justify-content: space-between;
 }
-
 .list-item{
   padding: 12px;
   display: flex;
@@ -364,4 +366,3 @@ border-radius: 15px 15px 0 0;
   transition: 0.4s ease-in-out;
   cursor: pointer;
 }
-
