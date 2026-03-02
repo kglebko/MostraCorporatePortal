@@ -16,39 +16,45 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
-// Add services to the container
+// Add services
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-// Add DbContext
+// DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add Identity
+// Identity
 builder.Services.AddIdentity<Collaborator, IdentityRole>(options =>
 {
-    // Password settings
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 8;
-    
-    // User settings
+
     options.User.RequireUniqueEmail = true;
     options.SignIn.RequireConfirmedEmail = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// Add IdentityServer
-var identityServerBuilder = builder.Services.AddIdentityServer(options =>
+// Kestrel HTTPS
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5001, listenOptions =>
+    {
+        listenOptions.UseHttps("localhost+2.pfx", "123456789");
+    });
+});
+
+// IdentityServer
+builder.Services.AddIdentityServer(options =>
 {
     options.Events.RaiseErrorEvents = true;
     options.Events.RaiseInformationEvents = true;
     options.Events.RaiseFailureEvents = true;
     options.Events.RaiseSuccessEvents = true;
-    
     options.EmitStaticAudienceClaim = true;
 })
 .AddInMemoryIdentityResources(Config.IdentityResources)
@@ -57,7 +63,7 @@ var identityServerBuilder = builder.Services.AddIdentityServer(options =>
 .AddAspNetIdentity<Collaborator>()
 .AddProfileService<CustomProfileService>();
 
-// Add CORS
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowVueApp", policy =>
@@ -71,7 +77,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+// Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -89,18 +95,16 @@ app.UseAuthorization();
 app.MapRazorPages();
 app.MapControllers();
 
-// Seed database
+// Seed DB
 try
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var services = scope.ServiceProvider;
-        var context = services.GetRequiredService<ApplicationDbContext>();
-        var userManager = services.GetRequiredService<UserManager<Collaborator>>();
-        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-        
-        await SeedData.InitializeAsync(context, userManager, roleManager);
-    }
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    var userManager = services.GetRequiredService<UserManager<Collaborator>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await SeedData.InitializeAsync(context, userManager, roleManager);
 }
 catch (Exception ex)
 {
@@ -108,4 +112,3 @@ catch (Exception ex)
 }
 
 app.Run();
-
