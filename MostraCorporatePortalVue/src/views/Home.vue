@@ -148,7 +148,7 @@ const courses = [
 
                   <div class="birthday-item">
                     <div class="birthday-block">
-                      <img class="birthday-photo" src="../assets/images/profile_foto.png">
+                      <img class="birthday-photo" src="../assets/images/profile_photo.png">
                       <div class="birthday-age">27</div>
                     </div>
                     <a class="birthday-person">Соколова Наталья Андреевна</a>
@@ -156,7 +156,7 @@ const courses = [
 
                   <div class="birthday-item">
                     <div class="birthday-block">
-                      <img class="birthday-photo" src="../assets/images/profile_foto.png">
+                      <img class="birthday-photo" src="../assets/images/profile_photo.png">
                       <div class="birthday-age">32</div>
                     </div>
                     <a class="birthday-person">Михайлов Кирилл Денисович</a>
@@ -164,7 +164,7 @@ const courses = [
 
                   <div class="birthday-item">
                     <div class="birthday-block">
-                      <img class="birthday-photo" src="../assets/images/profile_foto.png">
+                      <img class="birthday-photo" src="../assets/images/profile_photo.png">
                       <div class="birthday-age">31</div>
                     </div>
                     <a class="birthday-person">Хмельницкая Софья Юрьевна</a>
@@ -172,7 +172,7 @@ const courses = [
 
                   <div class="birthday-item">
                     <div class="birthday-block">
-                      <img class="birthday-photo" src="../assets/images/profile_foto.png">
+                      <img class="birthday-photo" src="../assets/images/profile_photo.png">
                       <div class="birthday-age">22</div>
                     </div>
                     <a class="birthday-person">Петкун Диана Олеговна</a>

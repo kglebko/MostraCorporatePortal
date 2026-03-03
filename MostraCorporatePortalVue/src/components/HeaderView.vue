@@ -92,10 +92,14 @@ onBeforeUnmount(() => {
       </button>
 
       <div v-if="isMenuOpen" class="dropdown">
-        <button class="dropdown_item" @click="logout">
-          Выйти
-        </button>
+        <div class="dropdown-item">
+          <img class="dropdown-icon" src="/icons/exit.svg">
+          <button class="dropdown-text" @click="logout">
+            Выйти
+          </button>
+        </div>
       </div>
+
     </div>
   </header>
 </template>
@@ -187,9 +191,24 @@ nav {
   z-index: 100;
 }
 
-.dropdown_item {
+.dropdown-item {
   width: 100%;
   padding: 12px 16px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dropdown-icon{
+  height: 20px;
+}
+
+.dropdown-item:hover {
+  background: #fff4ec;
+}
+
+.dropdown-text{
   background: none;
   border: none;
   text-align: left;
@@ -197,12 +216,7 @@ nav {
   font-family: 'TT Travels', sans-serif;
   font-weight: 500;
   font-size: 16px;
-  color: var(--primary-orange);
-}
-
-.dropdown_item:hover {
-  background: #fff4ec;
-  border-radius: 15px;
+  color: var(--dark-blue);
 }
 
 nav a.router-link-exact-active {
