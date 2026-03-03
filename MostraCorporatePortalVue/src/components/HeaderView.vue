@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import apiService from '@/services/apiService'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
+const router = useRouter()
+
+const currentUser = computed(() => authStore.userClaims)
 const isMenuOpen = ref(false)
 const menuRef = ref<HTMLElement | null>(null)
-
-interface ServerUser {
-  id: string
-  fullName: string
-  photo?: string
-}
-
-const currentUser = ref<{ id: string; firstName: string; lastName: string; photo: string } | null>(null)
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
@@ -23,6 +17,7 @@ const toggleMenu = () => {
 const logout = async () => {
   isMenuOpen.value = false
   await authStore.logout()
+  router.replace('/') // после выхода на главную
 }
 
 const handleClickOutside = (event: MouseEvent) => {
@@ -31,27 +26,8 @@ const handleClickOutside = (event: MouseEvent) => {
   }
 }
 
-onMounted(async () => {
+onMounted(() => {
   document.addEventListener('click', handleClickOutside)
-
-  try {
-    const user = await apiService.get<ServerUser>('/profile')
-    // Разбиваем fullName на фамилию и имя
-    const nameParts = user.fullName.trim().split(' ')
-    const lastName = nameParts[0] || ''
-    const firstName = nameParts[1] || ''
-
-    currentUser.value = {
-      id: user.id,
-      firstName,
-      lastName,
-      photo: user.photo
-        ? `https://localhost:5078/images/collaborators_photo/${user.photo}`
-        : new URL('../assets/images/profile_photo.png', import.meta.url).href
-    }
-  } catch (err) {
-    console.error('Не удалось загрузить профиль:', err)
-  }
 })
 
 onBeforeUnmount(() => {
@@ -67,24 +43,26 @@ onBeforeUnmount(() => {
       </RouterLink>
     </div>
 
-    <div>
-      <nav>
-        <RouterLink :to="{ name: 'home' }">Главная</RouterLink>
-        <RouterLink :to="{ name: 'corporateLife' }">Корпоративная жизнь</RouterLink>
-        <RouterLink :to="{ name: 'training' }">Обучение</RouterLink>
-        <RouterLink :to="{ name: 'events' }">События</RouterLink>
-        <RouterLink :to="{ name: 'forNew' }">Новичку</RouterLink>
-        <RouterLink :to="{ name: 'employees' }">Сотрудники</RouterLink>
-      </nav>
-    </div>
+    <nav>
+      <RouterLink :to="{ name: 'home' }">Главная</RouterLink>
+      <RouterLink :to="{ name: 'corporateLife' }">Корпоративная жизнь</RouterLink>
+      <RouterLink :to="{ name: 'training' }">Обучение</RouterLink>
+      <RouterLink :to="{ name: 'events' }">События</RouterLink>
+      <RouterLink :to="{ name: 'forNew' }">Новичку</RouterLink>
+      <RouterLink :to="{ name: 'employees' }">Сотрудники</RouterLink>
+    </nav>
 
     <div class="user_block" ref="menuRef" v-if="currentUser">
       <RouterLink 
-        :to="{ name: 'employeeDetails', params: { id: currentUser.id } }"
+        :to="{ name: 'employeeDetails', params: { id: currentUser.sub } }"
         class="user_info"
       >
         <p class="namelabel">{{ currentUser.firstName }} {{ currentUser.lastName }}</p>
-        <img class="profile_photo" :src="currentUser.photo" alt="Фото сотрудника"/>
+        <img class="profile_photo" :src="currentUser?.photo 
+            ? `https://localhost:5078/images/collaborators_photo/${currentUser.photo}` 
+            : 'https://localhost:5078/images/collaborators_photo/profile_photo.png'"
+          alt="Фото сотрудника"
+        />
       </RouterLink>
 
       <button class="menu_btn" @click.stop="toggleMenu">
@@ -94,12 +72,9 @@ onBeforeUnmount(() => {
       <div v-if="isMenuOpen" class="dropdown">
         <div class="dropdown-item">
           <img class="dropdown-icon" src="/icons/exit.svg">
-          <button class="dropdown-text" @click="logout">
-            Выйти
-          </button>
+          <button class="dropdown-text" @click="logout">Выйти</button>
         </div>
       </div>
-
     </div>
   </header>
 </template>

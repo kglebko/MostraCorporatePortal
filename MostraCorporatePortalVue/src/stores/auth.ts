@@ -7,39 +7,67 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
+  const authReady = ref(false)
 
-  const isAuthenticated = computed(() => user.value !== null && (user.value?.expired === false))
+  const isAuthenticated = computed(() =>
+    user.value !== null && !user.value.expired
+  )
 
   const userClaims = computed(() => {
-    if (!user.value) return null
-    
-    return {
-      sub: user.value.profile.sub,
-      name: user.value.profile.name,
-      email: user.value.profile.email,
-      firstName: user.value.profile.first_name,
-      lastName: user.value.profile.last_name,
-      fullName: user.value.profile.full_name,
-      photo: user.value.profile.photo
-    }
-  })
+  if (!user.value || !user.value.profile) return null
 
-  async function loadUser() {
+  // Приводим full_name к строке
+  const fullName = String(user.value.profile.full_name || '')
+  const nameParts = fullName.trim().split(' ')
+
+  const photoRaw = String(user.value.profile.photo || '')
+  const photo = photoRaw.split(',')[0]
+
+
+  return {
+    sub: String(user.value.profile.sub || ''),
+    name: String(user.value.profile.name || ''),
+    email: String(user.value.profile.email || ''),
+    firstName: nameParts[1] || '',
+    lastName: nameParts[0] || '',
+    fullName,
+    photo
+  }
+})
+
+
+  async function init() {
+    if (authReady.value) return // 🔹 инициализация один раз
+
     isLoading.value = true
     error.value = null
+
     try {
-      user.value = await authService.getUser()
+      const loadedUser = await authService.getUser()
+      user.value = loadedUser && !loadedUser.expired ? loadedUser : null
+
+      // Подписки один раз
+      authService.onUserLoaded((loadedUser) => {
+        user.value = loadedUser
+      })
+
+      authService.onUserUnloaded(() => {
+        user.value = null
+      })
+
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Ошибка загрузки пользователя'
+      error.value = err instanceof Error ? err.message : 'Ошибка инициализации авторизации'
       user.value = null
     } finally {
       isLoading.value = false
+      authReady.value = true
     }
   }
 
   async function login() {
     isLoading.value = true
     error.value = null
+
     try {
       await authService.login()
     } catch (err) {
@@ -55,11 +83,8 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null
     try {
       await authService.logout()
-      user.value = null
-    } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Ошибка выхода'
-      throw err
     } finally {
+      user.value = null
       isLoading.value = false
     }
   }
@@ -68,8 +93,9 @@ export const useAuthStore = defineStore('auth', () => {
     isLoading.value = true
     error.value = null
     try {
-      user.value = await authService.handleCallback()
-      return user.value
+      const callbackUser = await authService.handleCallback()
+      user.value = callbackUser && !callbackUser.expired ? callbackUser : null
+      return callbackUser
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Ошибка обработки callback'
       user.value = null
@@ -78,37 +104,17 @@ export const useAuthStore = defineStore('auth', () => {
       isLoading.value = false
     }
   }
-  function init() {
-    loadUser()
-  
-    authService.onUserLoaded((loadedUser) => {
-      user.value = loadedUser
-    })
-
-    authService.onUserUnloaded(() => {
-      user.value = null
-    })
-
-    authService.onAccessTokenExpiring(() => {
-      authService.getAccessToken()
-    })
-
-    authService.onAccessTokenExpired(() => {
-      authService.getAccessToken()
-    })
-  }
 
   return {
     user,
     isLoading,
     error,
+    authReady,
     isAuthenticated,
     userClaims,
-    loadUser,
+    init,
     login,
     logout,
-    handleCallback,
-    init
+    handleCallback
   }
 })
-
