@@ -4,8 +4,10 @@ export interface Collaborator {
   birthDate: string
   position: string
   department: string
+  departmentId: string
   workFormat: string
   organization: string
+  organizationId: string
   role: string
   username: string
   email: string

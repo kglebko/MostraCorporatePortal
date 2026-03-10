@@ -1,45 +1,97 @@
 <script setup lang="ts">
-
-</script>
-
-<script setup lang="ts">
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import DashboardCard from '@/components/DashboardCard.vue'
+import apiService from '@/services/apiService'
+
+interface Manager {
+  id: string
+  fullName: string
+}
+
+interface Department {
+  id: number
+  name: string
+  organizationId: number
+  organizationName: string
+  parentDepartmentId?: number
+  parentDepartmentName?: string
+  managers: Manager[]
+}
+
+const route = useRoute()
+const department = ref<Department | null>(null)
+
+async function loadDepartment(id: string | number) {
+  department.value = await apiService.get(`/departments/${id}`)
+}
+
+// при первоначальной загрузке
+const initialId = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id
+if (initialId) loadDepartment(initialId)
+
+// следим за изменением параметра id
+watch(
+  () => route.params.id,
+  (newId) => {
+    const id = Array.isArray(newId) ? newId[0] : newId
+    if (id) loadDepartment(id)
+  }
+)
 </script>
 
 <template>
-    
-    <div class="page-title">
-        <h1>Департамент информационных технологий</h1>
-        <h2>Подразделение</h2>
-    </div>
 
-    <div class="dashboard">
+    <div v-if="department">
+        <div class="page-title">
+            <h1>{{ department.name }}</h1>
+            <h2>Подразделение</h2>
+        </div>
+    
+        <div class="dashboard">
             <DashboardCard style='width: 100%;'>
                 <div class="user-information">
                     <div class="about-user-block">
                         <div class="info-row">
                             <p class="user-about">Название:</p>
-                            <p class="user-info">Департамент информационных технологий</p>
+                            <p class="user-info">{{ department.name }}</p>
                         </div>
                         <div class="info-row">
                             <p class="user-about">Руководитель:</p>
                             <div class="info-list">
-                                <p class="user-info">Тынчеров Андрей Рафаэлович</p>
-                                <p class="user-info">Жамойдик Татьяна Николаевна</p>
+                                <p
+                                v-for="manager in department.managers"
+                                :key="manager.id"
+                                class="user-info"
+                                >
+                                {{ manager.fullName }}
+                                </p>
                             </div>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row" v-if="department.parentDepartmentName">
                             <p class="user-about">Родительское подразделение:</p>
-                            <RouterLink :to="{ name: 'organizationDetails'}" class="user-info">MOSTRA</RouterLink>
+                            <RouterLink
+                                :to="{ name:'departmentDetails', params:{ id: department.parentDepartmentId }}"
+                                class="user-info"
+                                >
+                                {{ department.parentDepartmentName }}
+                                </RouterLink>
                         </div>
                         <div class="info-row">
                             <p class="user-about">Организация:</p>
-                            <RouterLink :to="{ name: 'organizationDetails'}" class="user-info">MOSTRA</RouterLink>
+                            <RouterLink
+                                :to="{ name:'organizationDetails', params:{ id: department.organizationId }}"
+                                class="user-info"
+                                >
+                                {{ department.organizationName }}
+                                </RouterLink>
                         </div>
                     </div>
                 </div>
             </DashboardCard>
         </div>
+    </div>
+    
 </template>
 
 

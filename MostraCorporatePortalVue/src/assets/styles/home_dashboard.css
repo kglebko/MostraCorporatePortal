@@ -11,7 +11,7 @@
   border: 1px solid var(--light-gray);
   border-radius: 15px;
   overflow: hidden;
-  height: fit-content;
+  /*height: fit-content;*/
 }
 
 .news-photo {

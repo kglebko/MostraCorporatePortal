@@ -9,8 +9,10 @@ interface Collaborator {
   birthDate: string
   position: string
   department: string
+  departmentId: number
   workFormat: string
   organization: string
+  organizationId: number
   role: string
   username: string
   email: string
@@ -61,13 +63,24 @@ onMounted(async () => {
 
                 <div class="info-row">
                   <p class="user-about">Подразделение:</p>
-                  <p class="user-info">{{ user.department }}</p>
+                  <RouterLink
+                    :to="{ name: 'departmentDetails', params: { id: user.departmentId } }"
+                    class="user-info"
+                  >
+                    {{ user.department }}
+                  </RouterLink>
                 </div>
 
                 <div class="info-row">
                   <p class="user-about">Организация:</p>
-                  <p class="user-info">{{ user.organization }}</p>
+                  <RouterLink
+                    :to="{ name: 'organizationDetails', params: { id: user.organizationId } }"
+                    class="user-info"
+                  >
+                    {{ user.organization }}
+                  </RouterLink>
                 </div>
+
               </div>
 
               <div class="about-user-block">
