@@ -63,6 +63,12 @@ builder.Services.AddIdentityServer(options =>
 .AddAspNetIdentity<Collaborator>()
 .AddProfileService<CustomProfileService>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+    options.SlidingExpiration = true;
+});
+
 // CORS
 builder.Services.AddCors(options =>
 {

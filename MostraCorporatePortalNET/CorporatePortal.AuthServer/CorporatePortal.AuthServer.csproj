@@ -24,10 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\Account\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Include="wwwroot\icons\hide_password_icon.svg" />
       <None Include="wwwroot\icons\logo.svg" />
       <None Include="wwwroot\icons\show_password_icon.svg" />

@@ -74,7 +74,12 @@ public class AccountController : Controller
             ModelState.AddModelError(string.Empty, "Неверный логин или пароль");
         }
 
-        return View(new LoginViewModel { ReturnUrl = returnUrl, Error = "Неверный логин или пароль" });
+        return View(new LoginViewModel
+        {
+            ReturnUrl = returnUrl,
+            Error = "Неверный логин или пароль",
+            RememberLogin = model.RememberLogin
+        });
     }
 
     [HttpGet("logout")]

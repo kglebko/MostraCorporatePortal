@@ -231,7 +231,11 @@ body {
 
         <div class="login-options">
             <div class="remember-me">
-                <input type="checkbox" id="RememberLogin" name="RememberLogin" />
+                <input type="checkbox"
+                       id="RememberLogin"
+                       name="RememberLogin"
+                       value="true"
+                       @(Model?.RememberLogin == true ? "checked" : "") />
                 <label for="RememberLogin">Запомнить меня</label>
             </div>
 
