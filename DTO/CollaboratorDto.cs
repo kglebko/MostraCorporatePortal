@@ -10,6 +10,10 @@ public class CollaboratorDto
     public string Position { get; set; } = string.Empty;
     public string Department { get; set; } = string.Empty;
     public string? WorkFormat { get; set; }
+    
+    public int DepartmentId { get; set; }
+    
+    public int OrganizationId { get; set; }
     public string Organization { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;

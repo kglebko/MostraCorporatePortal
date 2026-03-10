@@ -17,6 +17,10 @@ public class AppDbContext : IdentityDbContext<Collaborator>
     public DbSet<WorkFormat> WorkFormats => Set<WorkFormat>();
     public DbSet<Organization> Organizations => Set<Organization>();
     public DbSet<Role> Roles => Set<Role>();
+    
+    public DbSet<DepartmentManager> DepartmentManagers => Set<DepartmentManager>();
+    public DbSet<OrganizationManager> OrganizationManagers => Set<OrganizationManager>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -106,5 +110,43 @@ public class AppDbContext : IdentityDbContext<Collaborator>
         modelBuilder.Entity<WorkFormat>().Property(w => w.Name).HasColumnName("name").IsRequired();
         modelBuilder.Entity<Organization>().Property(o => o.Name).HasColumnName("name").IsRequired();
         modelBuilder.Entity<Role>().Property(r => r.Name).HasColumnName("name").IsRequired();
+        
+        
+        
+        modelBuilder.Entity<Department>().Property(d => d.ParentDepartmentId).HasColumnName("parent_department_id").IsRequired(false);
+        modelBuilder.Entity<Department>().Property(d => d.OrganizationId).HasColumnName("organization_id").IsRequired();
+        
+        modelBuilder.Entity<Department>()
+            .HasOne(d => d.Organization)
+            .WithMany(o => o.Departments)
+            .HasForeignKey(d => d.OrganizationId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Department>()
+            .HasOne(d => d.ParentDepartment)
+            .WithMany(d => d.ChildDepartments)
+            .HasForeignKey(d => d.ParentDepartmentId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<DepartmentManager>()
+            .HasOne(dm => dm.Department)
+            .WithMany(d => d.Managers)
+            .HasForeignKey(dm => dm.DepartmentId);
+
+        modelBuilder.Entity<DepartmentManager>()
+            .HasOne(dm => dm.Collaborator)
+            .WithMany()
+            .HasForeignKey(dm => dm.CollaboratorId);
+
+        modelBuilder.Entity<OrganizationManager>()
+            .HasOne(om => om.Organization)
+            .WithMany(o => o.Managers)
+            .HasForeignKey(om => om.OrganizationId);
+
+        modelBuilder.Entity<OrganizationManager>()
+            .HasOne(om => om.Collaborator)
+            .WithMany()
+            .HasForeignKey(om => om.CollaboratorId);
+        
     }
 }

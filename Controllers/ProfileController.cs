@@ -39,6 +39,8 @@ public class ProfileController : ControllerBase
                 FullName = c.FullName,
                 BirthDate = c.BirthDate,
                 Position = c.Position!.Name,
+                DepartmentId = c.DepartmentId,
+                OrganizationId = c.OrganizationId,
                 Department = c.Department!.Name,
                 WorkFormat = c.WorkFormat != null ? c.WorkFormat.Name : null,
                 Organization = c.Organization!.Name,
