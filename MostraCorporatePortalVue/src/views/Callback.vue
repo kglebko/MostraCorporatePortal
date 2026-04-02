@@ -43,13 +43,14 @@ function retry() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
 .callback-container {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--ligth-gray) 0%, var(--primary-orange) 100%);
+  background: linear-gradient(135deg, $ligth-gray 0%, $primary-orange 100%);
 }
 
 .loading {
@@ -58,7 +59,7 @@ function retry() {
 }
 
 .spinner {
-  border: 4px solid var(--ligth-gray);
+  border: 4px solid $ligth-gray;
   border-top: 4px solid white;
   border-radius: 50%;
   width: 50px;
@@ -75,7 +76,7 @@ function retry() {
 .error {
   text-align: center;
   color: white;
-  background: var(--white);
+  background: $white;
   padding: 20px;
   border-radius: 10px;
 }
@@ -84,7 +85,7 @@ function retry() {
   margin-top: 15px;
   padding: 10px 20px;
   background: white;
-  color: var(--primary-orange);
+  color: $primary-orange;
   border: none;
   border-radius: 5px;
   cursor: pointer;

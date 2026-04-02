@@ -13,7 +13,8 @@ const routes = [
   { path: '/employees/:id', name: 'employeeDetails', component: () => import('@/views/employees/EmployeeDetails.vue'), meta: { requiresAuth: true } },
   { path: '/departments/:id', name: 'departmentDetails', component: () => import('@/views/departments/DepartmentDetails.vue'), meta: { requiresAuth: true } },
   { path: '/organizations/:id', name: 'organizationDetails', component: () => import('@/views/organizations/OrganizationDetails.vue'), meta: { requiresAuth: true } },
-  { path: '/logout-callback', name: 'logoutCallback', component: () => import('@/views/LogoutCallbackView.vue') }
+  { path: '/logout-callback', name: 'logoutCallback', component: () => import('@/views/LogoutCallbackView.vue') },
+  { path: '/news', name: 'newsList', component: () => import('@/views/corporate-life/NewsList.vue') }
 ]
 
 const router = createRouter({

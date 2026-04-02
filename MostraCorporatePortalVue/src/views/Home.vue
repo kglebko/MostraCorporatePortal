@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import DashboardCard from '@/components/DashboardCard.vue'
-import '@/assets/styles/home_dashboard.css'
+import '@/assets/styles/_home_dashboard.scss'
 
 const today = new Date()
 const currentMonth = today.getMonth()
@@ -62,7 +62,7 @@ const courses = [
           <DashboardCard
               title="Корпоративная жизнь"
               icon="/icons/corporate_life_icon.svg"
-              link="/news"
+              :link="{ name: 'newsList' }"
               linkText="Все новости"
               style='width: 75%;'
               >

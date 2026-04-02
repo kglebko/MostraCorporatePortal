@@ -6,8 +6,11 @@
 }
 
 #main{
-  /* max-width: 1520px; */
-  margin: 0 10rem;
+  margin: 0 auto;
+  padding: 40px 0 60px;
+  min-height: calc(100vh - 60px);
+  background-color: var(--white);
+  max-width: 1520px; 
 }
 
 a{
@@ -61,9 +64,9 @@ h2{
 .dashboard{
   display: flex;
   flex-direction: column;
-  width: 100%;
   margin: 0;
   gap: 24px;
+  width: 1520px;
 }
 
 .dashboard-container{

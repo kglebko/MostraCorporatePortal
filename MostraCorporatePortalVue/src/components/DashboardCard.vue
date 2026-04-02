@@ -5,7 +5,7 @@ import { computed } from 'vue'
 const props = defineProps<{
   title?: string
   icon?: string
-  link?: string
+  link?: string | object
   linkText?: string
 }>()
 
@@ -38,7 +38,7 @@ const hasHeader = computed(() => {
 </template>
 
 
-<style scoped>
+<style scoped lang="scss">
 
 .dashboard-item{
   display: flex;
@@ -46,7 +46,7 @@ const hasHeader = computed(() => {
   flex-direction: column;
   background: white;
   border-radius: 15px;
-  border: 1px solid var(--light-gray);
+  border: 1px solid $light-gray;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
   padding: 32px 40px 40px;
   gap: 1rem;
@@ -80,7 +80,7 @@ const hasHeader = computed(() => {
 
 .dashboard-link{
   font-size: 16px;
-  color: var(--primary-orange);
+  color: $primary-orange;
   text-decoration: none;
 }
 

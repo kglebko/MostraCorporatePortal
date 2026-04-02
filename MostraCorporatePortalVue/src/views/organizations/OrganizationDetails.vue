@@ -63,7 +63,7 @@ onMounted(async () => {
 </template>
 
 
-<style scoped>
+<style scoped lang="scss">
 
 .user-information {
     flex: 1;  
@@ -79,7 +79,7 @@ onMounted(async () => {
 }
 
 a{
-    color: var(--primary-orange)
+    color: $primary-orange;
 }
 
 .info-row {
@@ -89,7 +89,7 @@ a{
 
 .user-about {
     width: 320px;
-    color: var(--blue-gray);
+    color: $blue-gray;
     font-size: 16px;
     font-weight: 400;
 }

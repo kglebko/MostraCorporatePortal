@@ -174,98 +174,97 @@ onMounted(async () => {
 </template>
 
 
-
-<style scoped>
+<style scoped lang="scss">
 
 .content-block {
-    display: flex;
-    gap: 60px;
-    align-items: center;
+  display: flex;
+  gap: 60px;
+  align-items: center;
 }
 
 .avatar {
-    flex: 0 0 300px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    overflow: hidden;
+  flex: 0 0 300px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .user-information {
-    flex: 1;  
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+  flex: 1;  
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .about-user-block {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 a{
-    color: var(--primary-orange)
+  color: $primary-orange;
 }
 
 .info-row {
-    display: flex;
-    gap: 2rem;
+  display: flex;
+  gap: 2rem;
 }
 
 .user-about {
-    width: 200px;
-    color: var(--blue-gray);
-    font-size: 16px;
-    font-weight: 400;
+  width: 200px;
+  color: $blue-gray;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .user-info {
-    flex: 1;
-    padding: 0;
+  flex: 1;
+  padding: 0;
 }
 
 .info-list{
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 }
 
 .list_item{
-    display: flex;
-    gap: 12px;
-    align-items: center;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .stats{
-    display: flex;
-    justify-content: center;
-    column-gap: 2rem;
-    margin: 0.2rem 0 0.4rem;
+  display: flex;
+  justify-content: center;
+  column-gap: 2rem;
+  margin: 0.2rem 0 0.4rem;
 }
 
 .stats-item{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .completed-count{
-    color: var(--primary-orange);
-    font-size: 24px;
-    font-weight: 600;
+  color: $primary-orange;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .completed-label{
-    font-weight: 400;
-    font-size: 16px;
-    color: var(--blue-gray);
+  font-weight: 400;
+  font-size: 16px;
+  color: $blue-gray;
 }
 
 </style>

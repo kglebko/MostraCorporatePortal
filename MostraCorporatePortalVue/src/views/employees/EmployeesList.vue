@@ -74,7 +74,7 @@ const filteredEmployees = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
 .icon_search {
   position: absolute;
@@ -90,7 +90,7 @@ const filteredEmployees = computed(() => {
 .table-wrapper {
   background: white;
   border-radius: 15px;
-  border: 1px solid var(--light-gray);
+  border: 1px solid $light-gray;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
 
   max-height: 480px;
@@ -100,6 +100,7 @@ const filteredEmployees = computed(() => {
 
 table {
   width: 100%;
+  max-width: $mw1520;
   border-collapse: collapse;
   table-layout: fixed;
 }
@@ -123,7 +124,7 @@ tbody {
 th, td {
   padding: 12px 20px;
   text-align: left;
-  border-bottom: 1px solid var(--light-gray);
+  border-bottom: 1px solid $light-gray;
   word-wrap: break-word;
 }
 
@@ -137,76 +138,6 @@ th:nth-child(3) { width: 180px; }
 th:nth-child(4) { width: 240px; }
 th:nth-child(5) { width: 140px; }
 th:nth-child(6) { width: 150px; }
-
-
-</style>
-
-
-
-<style scoped>
-
-.icon_search {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-.table-wrapper {
-  background: white;
-  border-radius: 15px;
-  border: 1px solid var(--light-gray);
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-
-  max-height: 480px;
-  overflow-y: auto;
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-thead th {
-  position: sticky;
-  top: 0;
-  background: #f9fafb;
-  z-index: 2;
-  font-weight: 600;
-  font-size: 15px;
-  padding: 16px 20px;
-}
-
-tbody {
-  font-family: 'TT Travels', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-}
-
-th, td {
-  padding: 12px 20px;
-  text-align: left;
-  border-bottom: 1px solid var(--light-gray);
-  word-wrap: break-word;
-}
-
-tbody tr:hover {
-  background-color: #fff4ec;
-}
-
-th:nth-child(1) { width: 200px; }
-th:nth-child(2) { width: 180px; }
-th:nth-child(3) { width: 180px; }
-th:nth-child(4) { width: 240px; }
-th:nth-child(5) { width: 140px; }
-th:nth-child(6) { width: 150px; }
-
 
 </style>
 
