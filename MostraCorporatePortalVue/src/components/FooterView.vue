@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import '@/assets/styles/_footer.scss'
+import '@/assets/styles/footer.scss'
 </script>
 
 
@@ -21,7 +21,7 @@ import '@/assets/styles/_footer.scss'
         <a href="#"><img src="@/assets/icons/social/odnoklassniki_icon.svg" /></a>
       </div>
 
-      <p class="copyright">© 2026 Учебный центр "МОНСТРА-ГРУПП"</p>
+      <p class="copyright">© 2026 Учебный центр "МОСТРА-ГРУПП"</p>
     </div>
   </footer>
 </template>

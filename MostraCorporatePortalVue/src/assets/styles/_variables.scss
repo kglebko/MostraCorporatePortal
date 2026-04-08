@@ -1,24 +1,46 @@
-$primary-orange: var(--primary-orange);
-$dark-blue: var(--dark-blue);
-$blue-gray: var(--blue-gray);
+$orange: var(--orange);
+$blue: var(--blue);
+$gray: var(--gray);
 $light-gray: var(--light-gray);
 $white: var(--white);
 
 $mw1520: 1520px;
+$mw1360: 1360px;
+$mw1200: 1200px;
 
-
-
-
-
-
-
-
+$border-radius: 15px;
 
 
 $spacing-sm: 8px;
 $spacing-md: 16px;
 $spacing-lg: 24px;
 
-$border-radius: 15px;
 $header-height: 40px;
 
+//font-size
+$lt: 12px;
+$sm: 14px;
+$bs: 16px;
+$md: 20px;
+$lg: 24px;
+
+//font-family
+$font: 'TT Travels';
+
+//font-weight
+$light: 300;
+$regular: 400;
+$medium: 500;
+$demibold: 600;
+$bold: 700;
+
+
+@mixin text-style($size, $weight, $color: $blue) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+}
+
+@mixin label { @include text-style($sm, $regular, $gray); }
+
+@mixin title { @include text-style($md, $medium); }

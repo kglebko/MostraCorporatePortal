@@ -49,8 +49,9 @@ function retry() {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, $ligth-gray 0%, $primary-orange 100%);
+  min-height: 80vh;
+  background: linear-gradient(135deg, $light-gray 0%, $orange 100%);
+  border-radius: $border-radius;
 }
 
 .loading {
@@ -59,7 +60,7 @@ function retry() {
 }
 
 .spinner {
-  border: 4px solid $ligth-gray;
+  border: 4px solid $light-gray;
   border-top: 4px solid white;
   border-radius: 50%;
   width: 50px;
@@ -78,14 +79,14 @@ function retry() {
   color: white;
   background: $white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: $border-radius;
 }
 
 .retry-btn {
   margin-top: 15px;
   padding: 10px 20px;
   background: white;
-  color: $primary-orange;
+  color: $orange;
   border: none;
   border-radius: 5px;
   cursor: pointer;

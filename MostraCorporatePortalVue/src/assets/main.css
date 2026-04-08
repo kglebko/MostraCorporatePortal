@@ -10,25 +10,37 @@
   padding: 40px 0 60px;
   min-height: calc(100vh - 60px);
   background-color: var(--white);
-  max-width: 1520px; 
+  max-width: 1360px; 
 }
 
 a{
   text-decoration: none;
-  color: var(--dark-blue);
+  color: var(--blue);
   transition: 0.4s ease-in-out;
-  padding: 2px;
+  padding: 2px 0;
+}
+
+a:hover{
+  transform: translateY(-2px);
+  color: var(--orange);
 }
 
 h1 {
   font-size: 28px;
   font-weight: 700;
+  max-width: 70%;
 }
 
 h2{
   font-size: 20px;
   font-weight: 600;
-  color: var(--blue-gray);
+  color: var(--gray);
+}
+
+h3{
+  font-size: 20px;
+  color: var(--blue);
+  font-weight: 600;
 }
 
 .page-title{
@@ -57,7 +69,7 @@ h2{
 }
 
 .search-bar input:focus {
-  border: 1px solid var(--primary-orange);
+  border: 1px solid var(--orange);
   box-shadow: 0 0 2px 2px rgba(246, 112, 1, 0.10);
 }
 
@@ -66,7 +78,7 @@ h2{
   flex-direction: column;
   margin: 0;
   gap: 24px;
-  width: 1520px;
+  width: 1360px;
 }
 
 .dashboard-container{
@@ -86,9 +98,33 @@ h2{
   /*max-height: 300px;*/
 }
 
+.more-block{
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+}
+
+.more{
+  color: var(--orange);
+  font-size: 14px;
+}
+
+.arrow-more{
+  height: 10px;
+  width: 10px;
+  margin-bottom: 2px;
+}
+
+.base-text{
+  font-size: 16px;
+  color: var(--gray);
+  font-weight: 400;
+}
+
+
 @media (hover: hover) {
   a:hover {
-    color: var(--primary-orange);
+    color: var(--orange);
     transform: translateY(-2px);
     transition: 0.4s ease-in-out;
   }
@@ -98,4 +134,16 @@ h2{
   body {
     display: flex;
   }
+}
+
+@media (max-width: 1440px) {
+  #main{
+    max-width: 1200px; 
+  }
+
+  .dashboard{
+    margin: 0 auto;
+    width: 1520px;
+  }
+
 }

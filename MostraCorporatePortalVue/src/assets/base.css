@@ -1,7 +1,7 @@
 :root {
-  --primary-orange: #f67001;
-  --dark-blue: #002b45;
-  --blue-gray: #3f4d58;
+  --orange: #f67001;
+  --blue: #002b45;
+  --gray: #3f4d58;
   --light-gray: #dfdfdf;
   --white: #ffffff;
 }
@@ -17,18 +17,25 @@ body {
   min-height: 100vh;
   margin: 0;
   background-color: var(--white);
-  color: var(--dark-blue);
+  color: var(--blue);
   word-break: normal;
   transition:
     color 0.5s,
     background-color 0.5s;
   line-height: 1.2;
-  font-family: 'TT Travels', sans-serif;
+  font-family: 'TT Travels';
   font-weight: 500;
   font-size: 16px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'TT Travels';
+  src: url('fonts/TTTravels-Light.ttf') format('woff2');
+  font-weight: 300;
+  font-style: normal;
 }
 
 @font-face {

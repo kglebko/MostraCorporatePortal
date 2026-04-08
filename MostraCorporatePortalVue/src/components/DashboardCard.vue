@@ -45,7 +45,7 @@ const hasHeader = computed(() => {
   min-width: 280px;
   flex-direction: column;
   background: white;
-  border-radius: 15px;
+  border-radius: $border-radius;
   border: 1px solid $light-gray;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
   padding: 32px 40px 40px;
@@ -78,10 +78,32 @@ const hasHeader = computed(() => {
   margin: 0;
 }
 
-.dashboard-link{
-  font-size: 16px;
-  color: $primary-orange;
+.dashboard-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+
+  font-size: $bs;
+  color: $orange;
   text-decoration: none;
+  transition: 0.4s ease-in-out;
+
+  :hover{
+    transform: translateY(-2px);
+  }
+
+  &::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: url('@/assets/icons/arrow_r.svg') no-repeat center;
+    background-size: contain;
+  }
+
+}
+
+.dashboard-link:hover{
+  transform: translateY(-2px);
 }
 
 </style>

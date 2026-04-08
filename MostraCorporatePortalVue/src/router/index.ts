@@ -14,7 +14,8 @@ const routes = [
   { path: '/departments/:id', name: 'departmentDetails', component: () => import('@/views/departments/DepartmentDetails.vue'), meta: { requiresAuth: true } },
   { path: '/organizations/:id', name: 'organizationDetails', component: () => import('@/views/organizations/OrganizationDetails.vue'), meta: { requiresAuth: true } },
   { path: '/logout-callback', name: 'logoutCallback', component: () => import('@/views/LogoutCallbackView.vue') },
-  { path: '/news', name: 'newsList', component: () => import('@/views/corporate-life/NewsList.vue') }
+  { path: '/news', name: 'newsList', component: () => import('@/views/corporate-life/NewsList.vue'), meta: { requiresAuth: true } },
+  { path: '/news/:id', name: 'newsItem', component: () => import('@/views/corporate-life/NewsItem.vue'), meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({

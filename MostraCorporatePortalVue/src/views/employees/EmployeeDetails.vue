@@ -210,7 +210,7 @@ onMounted(async () => {
 }
 
 a{
-  color: $primary-orange;
+  color: $orange;
 }
 
 .info-row {
@@ -220,7 +220,7 @@ a{
 
 .user-about {
   width: 200px;
-  color: $blue-gray;
+  color: $gray;
   font-size: 16px;
   font-weight: 400;
 }
@@ -256,7 +256,7 @@ a{
 }
 
 .completed-count{
-  color: $primary-orange;
+  color: $orange;
   font-size: 24px;
   font-weight: 600;
 }
@@ -264,7 +264,7 @@ a{
 .completed-label{
   font-weight: 400;
   font-size: 16px;
-  color: $blue-gray;
+  color: $gray;
 }
 
 </style>

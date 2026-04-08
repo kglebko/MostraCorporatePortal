@@ -79,7 +79,7 @@ onMounted(async () => {
 }
 
 a{
-    color: $primary-orange;
+    color: $orange;
 }
 
 .info-row {
@@ -89,7 +89,7 @@ a{
 
 .user-about {
     width: 320px;
-    color: $blue-gray;
+    color: $gray;
     font-size: 16px;
     font-weight: 400;
 }

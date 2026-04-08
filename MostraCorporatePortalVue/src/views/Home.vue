@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import DashboardCard from '@/components/DashboardCard.vue'
-import '@/assets/styles/_home_dashboard.scss'
+import '@/assets/styles/home.scss'
 
 const today = new Date()
 const currentMonth = today.getMonth()
@@ -72,24 +72,24 @@ const courses = [
                 <div class="main-post">
                   <img class="news-photo" src="../assets/images/news_photos/news2.png">
                   <div class="news-info">
-                    <a>Внедрены изменения в процессы внутреннего взаимодействия команд для  ускорения рабочих процессов</a>
+                    <a class="news-name">Внедрены изменения в процессы внутреннего взаимодействия команд</a>
                     <p class="news-date">6 февраля 2026 г.</p>
                   </div>
                 </div>
 
                 <div class="news-list">
                   <div class="list-item">
-                    <a>Компания расширила программу обучения и развития персонала</a>
+                    <a class="news-name">Компания расширила программу обучения</a>
                     <p class="news-date">31 января 2026 г.</p>
                   </div>
 
                   <div class="list-item">
-                    <a>Подведены итоги опроса вовлеченности сотрудников</a>
+                    <a class="news-name">Подведены итоги опроса вовлеченности сотрудников</a>
                     <p class="news-date">27 января 2026 г.</p>
                   </div>
 
                   <div class="list-item">
-                    <a>Прошло общее онлайн-собрание сотрудников с участием руководоства</a>
+                    <a class="news-name">Прошло общее онлайн-собрание сотрудников</a>
                     <p class="news-date">25 января 2026 г.</p>
                   </div>
 
@@ -246,7 +246,7 @@ const courses = [
 
       <div class="dashboard-columns" style='width: 25%;'>
         <DashboardCard
-            title="Мои задачи"
+            title="Задачи"
             icon="/icons/tasks_icon.svg"
             link="/training"
             linkText="Обучение"

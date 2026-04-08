@@ -2,7 +2,7 @@
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import '@/assets/styles/_header.scss'
+import '@/assets/styles/header.scss'
 
 
 const authStore = useAuthStore()
@@ -19,7 +19,7 @@ const toggleMenu = () => {
 const logout = async () => {
   isMenuOpen.value = false
   await authStore.logout()
-  router.replace('/') // после выхода на главную
+  router.replace('/')
 }
 
 const handleClickOutside = (event: MouseEvent) => {

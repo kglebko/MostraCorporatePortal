@@ -3,12 +3,10 @@ header {
 }
 
 .header-container{
-  max-width: $mw1520;
+  @include flex-between;
+  max-width: $mw1360;
   margin: 0 auto;
-  display: flex;
   height: 40px;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .logo {
@@ -29,11 +27,12 @@ header {
 }
 
 nav {
-  font-size: 15px;
+  font-size: $bs;
   font-weight: 500;
   text-align: center;
   display: flex;
   gap: 40px;
+  transition: 0.4s ease-in-out;
 }
 
 .user_block {
@@ -44,15 +43,19 @@ nav {
 }
 
 .user_info {
-  display: flex;
-  align-items: center;
+  @include flex-center;
   gap: 10px;
   text-decoration: none;
+  transition: 0.4s ease-in-out;
+}
+
+.user_info:hover{
+  transform: translateY(-2px);
 }
 
 .namelabel {
-  color: $blue-gray;
-  font-size: 13px;
+  color: $gray;
+  font-size: $sm;
   font-weight: 400;
   max-width: 88px;
   overflow-wrap: break-word;
@@ -64,8 +67,7 @@ nav {
   border: none;
   cursor: pointer;
   padding: 5px;
-  display: flex;
-  align-items: center;
+  @include flex-center;
 }
 
 .menu_btn img {
@@ -74,7 +76,7 @@ nav {
 }
 
 .menu_btn:hover {
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .dropdown {
@@ -82,16 +84,16 @@ nav {
   top: 50px;
   right: 0;
   background: $white;
-  border-radius: 15px;
+  border-radius: $border-radius;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
-  min-width: 120px;
+  min-width: 200px;
   z-index: 100;
 }
 
 .dropdown-item {
   width: 100%;
   padding: 12px 16px;
-  border-radius: 15px;
+  border-radius: $border-radius;;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -110,12 +112,23 @@ nav {
   border: none;
   text-align: left;
   cursor: pointer;
-  font-family: 'TT Travels', sans-serif;
+  font-family: $font;
   font-weight: 500;
-  font-size: 16px;
-  color: $dark-blue;
+  font-size: $bs;
+  color: $blue;
 }
 
 nav a.router-link-exact-active {
-  color: $primary-orange;
+  color: $orange;
 }
+
+nav a:hover{
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1440px) {
+  .header-container{
+    max-width: $mw1200;
+  }
+}
+

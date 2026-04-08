@@ -89,7 +89,7 @@ const filteredEmployees = computed(() => {
 
 .table-wrapper {
   background: white;
-  border-radius: 15px;
+  border-radius: $border-radius;
   border: 1px solid $light-gray;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
 
@@ -100,7 +100,6 @@ const filteredEmployees = computed(() => {
 
 table {
   width: 100%;
-  max-width: $mw1520;
   border-collapse: collapse;
   table-layout: fixed;
 }
@@ -116,7 +115,7 @@ thead th {
 }
 
 tbody {
-  font-family: 'TT Travels', sans-serif;
+  font-family: $font;
   font-weight: 400;
   font-size: 14px;
 }
