@@ -1,6 +1,7 @@
-export interface News{
+export interface News {
   id: number
   title: string
-  text: string
+  description: string
+  image?: string
   date: string
 }

@@ -1,15 +1,14 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import newsService from '@/services/newsService'
 import type { News } from '@/types/News'
+import { getNewsImage , formatDate} from '@/utils/helpers'
 
-const newsList: News[] = [
-  {
-    id: 1,
-    title: "Внедрены изменения в процессы внутреннего взаимодействия команд",
-    text: "В рамках оптимизации бизнес-процессов компании были внедрены новые подходы к внутреннему взаимодействию команд. Основной целью изменений стало ускорение рабочих процессов",
-    date: "6 февраля 2026"
-  }
-]
+const newsList = ref<News[]>([])
 
+onMounted(async () => {
+  newsList.value = await newsService.getAll()
+})
 </script>
 
 <template>
@@ -26,20 +25,21 @@ const newsList: News[] = [
     class="news-table"
   >
 
-    <img class="news-img" src="../../assets/images/news_photos/news2.png">
+    <img class="news-img" :src="getNewsImage(news.image)">
 
     <div class="news-info">
 
       <div class="news-about">
+
         <RouterLink
           :to="{ name: 'newsItem', params: { id: news.id } }"
           class="news-title"
         >
-          <a>{{ news.title }}</a>
+          {{ news.title }}
         </RouterLink>
 
         <p class="news-text">
-          {{ news.text }}
+          {{ news.description }}
         </p>
 
       </div>
@@ -48,7 +48,9 @@ const newsList: News[] = [
 
         <div class="date-block">
           <img src="../../assets/icons/date_publish.svg">
-          <p class="news-date-publish">{{ news.date }}</p>
+          <p class="news-date-publish">
+            {{ formatDate(news.date) }}
+          </p>
         </div>
 
         <RouterLink

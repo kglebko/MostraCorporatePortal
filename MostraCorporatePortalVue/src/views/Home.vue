@@ -1,7 +1,16 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import DashboardCard from '@/components/DashboardCard.vue'
 import '@/assets/styles/home.scss'
+import newsService from '@/services/newsService'
+import type { News } from '@/types/News'
+import { getNewsImage , formatDate} from '@/utils/helpers'
+
+const latestNews = ref<News[]>([])
+
+onMounted(async () => {
+  latestNews.value = await newsService.getLatest(4)
+})
 
 const today = new Date()
 const currentMonth = today.getMonth()
@@ -67,35 +76,38 @@ const courses = [
               style='width: 75%;'
               >
 
-              <div class="news-block">
+            <div class="news-block" v-if="latestNews.length">
 
-                <div class="main-post">
-                  <img class="news-photo" src="../assets/images/news_photos/news2.png">
+              <div class="main-post" v-if="latestNews[0]">
+                  <img
+                    class="news-photo"
+                    :src="getNewsImage(latestNews[0].image)"/>
+
                   <div class="news-info">
-                    <a class="news-name">Внедрены изменения в процессы внутреннего взаимодействия команд</a>
-                    <p class="news-date">6 февраля 2026 г.</p>
+                    <RouterLink :to="{ name:'newsItem', params:{ id: latestNews[0].id }}">
+                      <p class="news-name">{{ latestNews[0].title }}</p>
+                    </RouterLink>
+                    <p class="news-date">
+                      {{ formatDate(latestNews[0].date) }}
+                    </p>
                   </div>
-                </div>
-
-                <div class="news-list">
-                  <div class="list-item">
-                    <a class="news-name">Компания расширила программу обучения</a>
-                    <p class="news-date">31 января 2026 г.</p>
-                  </div>
-
-                  <div class="list-item">
-                    <a class="news-name">Подведены итоги опроса вовлеченности сотрудников</a>
-                    <p class="news-date">27 января 2026 г.</p>
-                  </div>
-
-                  <div class="list-item">
-                    <a class="news-name">Прошло общее онлайн-собрание сотрудников</a>
-                    <p class="news-date">25 января 2026 г.</p>
-                  </div>
-
-                </div>
-
               </div>
+
+              <div class="news-list">
+                <div v-for="item in latestNews.slice(1)"
+                  :key="item.id"
+                  class="list-item"
+                >
+                  <RouterLink :to="{ name:'newsItem', params:{ id:item.id }}">
+                      <p class="news-name">{{ item.title }}</p>
+                  </RouterLink>
+                  <p class="news-date">
+                    {{ formatDate(item.date) }}
+                  </p>
+                </div>
+              </div>
+
+            </div>
 
           </DashboardCard>
 
