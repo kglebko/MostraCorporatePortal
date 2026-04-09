@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MostraCorporatePortal.DTO;
+namespace MostraCorporatePortal.Dto;
 
 public class CollaboratorDto
 {

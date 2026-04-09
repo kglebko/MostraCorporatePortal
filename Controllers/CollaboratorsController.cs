@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MostraCorporatePortal.Data;
-using MostraCorporatePortal.DTO;
+using MostraCorporatePortal.Dto;
 using MostraCorporatePortal.Models;
 using Microsoft.AspNetCore.Identity;
 

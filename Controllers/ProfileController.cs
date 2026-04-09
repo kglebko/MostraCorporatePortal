@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using MostraCorporatePortal.Data;
-using MostraCorporatePortal.DTO;
+using MostraCorporatePortal.Dto;
 
 namespace MostraCorporatePortal.Controllers;
 

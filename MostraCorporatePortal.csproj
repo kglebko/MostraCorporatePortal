@@ -32,6 +32,7 @@
   <ItemGroup>
     <Folder Include="Repositories\" />
     <Folder Include="Services\" />
+    <Folder Include="wwwroot\images\news_photo\" />
   </ItemGroup>
 
   <ItemGroup>

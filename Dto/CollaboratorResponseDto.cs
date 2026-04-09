@@ -1,4 +1,4 @@
-﻿namespace MostraCorporatePortal.DTO;
+﻿namespace MostraCorporatePortal.Dto;
 
 public class CollaboratorResponseDto
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace MostraCorporatePortal.DTO;
+namespace MostraCorporatePortal.Dto;
 
 public class CreateCollaboratorDto
 {
