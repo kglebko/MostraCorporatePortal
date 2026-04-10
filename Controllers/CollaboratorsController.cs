@@ -29,6 +29,7 @@ public class CollaboratorsController : ControllerBase
             .Include(c => c.WorkFormat)
             .Include(c => c.Organization)
             .Include(c => c.Role)
+            .OrderBy((c => c.LastName))
             .Select(c => new CollaboratorDto
             {
                 Id = c.Id,
@@ -136,7 +137,8 @@ public async Task<IActionResult> Create([FromBody] CreateCollaboratorDto dto)
             Email = collaborator.Email,
             MobilePhone = collaborator.MobilePhone,
             InternalPhone = collaborator.InternalPhone,
-            CreatedAt = collaborator.CreatedAt
+            CreatedAt = collaborator.CreatedAt,
+            Photo = collaborator.Photo
         });
     }
 }
