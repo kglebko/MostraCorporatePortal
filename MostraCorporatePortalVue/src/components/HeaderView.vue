@@ -42,7 +42,7 @@ onBeforeUnmount(() => {
     <div class="header-container">
       <div>
         <RouterLink :to="{ name: 'home' }">
-          <img alt="logo" class="logo" src="@/assets/logo.svg" />
+          <img alt="logo" class="logo" src="@/assets/icons/logo.svg" />
         </RouterLink>
       </div>
   
@@ -60,7 +60,7 @@ onBeforeUnmount(() => {
           :to="{ name: 'employeeDetails', params: { id: currentUser.sub } }"
           class="user_info"
         >
-          <p class="namelabel">{{ currentUser.firstName }} {{ currentUser.lastName }}</p>
+          <p class="namelabel">{{ currentUser.lastName }} {{ currentUser.firstName }}</p>
           <img class="profile_photo" :src="currentUser?.photo 
               ? `https://localhost:5078/images/collaborators_photo/${currentUser.photo}` 
               : 'https://localhost:5078/images/collaborators_photo/profile_photo.png'"

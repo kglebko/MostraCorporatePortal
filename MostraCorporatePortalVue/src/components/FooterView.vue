@@ -8,7 +8,7 @@ import '@/assets/styles/footer.scss'
   <footer class="footer">
     <div class="footer-container">
       <RouterLink :to="{ name: 'home'}">
-        <img alt="logo_white" class="logo" src="/icons/logo_white.svg" />
+        <img alt="logo_white" class="logo" src="@/assets/icons/logo_white.svg" />
       </RouterLink>
 
       <div class="socials">

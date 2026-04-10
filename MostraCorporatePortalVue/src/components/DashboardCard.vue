@@ -86,7 +86,7 @@ const hasHeader = computed(() => {
   font-size: $bs;
   color: $orange;
   text-decoration: none;
-  transition: 0.4s ease-in-out;
+  transition: 0.4s ease-out;
 
   :hover{
     transform: translateY(-2px);

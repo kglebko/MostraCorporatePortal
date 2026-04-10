@@ -12,7 +12,7 @@ header {
 .logo {
   display: block;
   height: 40px;
-  transition: 0.4s ease-in-out;
+  transition: 0.4s ease-out;
 }
 
 .logo:hover {
@@ -32,7 +32,7 @@ nav {
   text-align: center;
   display: flex;
   gap: 40px;
-  transition: 0.4s ease-in-out;
+  transition: 0.4s ease-out;
 }
 
 .user_block {
@@ -44,9 +44,9 @@ nav {
 
 .user_info {
   @include flex-center;
-  gap: 10px;
+  gap: 16px;
   text-decoration: none;
-  transition: 0.4s ease-in-out;
+  transition: 0.4s ease-out;
 }
 
 .user_info:hover{
@@ -57,9 +57,10 @@ nav {
   color: $gray;
   font-size: $sm;
   font-weight: 400;
-  max-width: 88px;
+  max-width: 100px;
   overflow-wrap: break-word;
   min-width: 0;
+  text-align: end;
 }
 
 .menu_btn {

@@ -35,7 +35,7 @@ onMounted(async () => {
           :to="{ name: 'newsItem', params: { id: news.id } }"
           class="news-title"
         >
-          {{ news.title }}
+          <a>{{ news.title }}</a>
         </RouterLink>
 
         <p class="news-text">

@@ -16,7 +16,7 @@
 a{
   text-decoration: none;
   color: var(--blue);
-  transition: 0.4s ease-in-out;
+  transition: 0.4s ease-out;
   padding: 2px 0;
 }
 
@@ -53,7 +53,17 @@ h3{
 .search-bar {
   position: relative;
   width: 320px;
-  margin-bottom: 2rem;
+}
+
+.icon_search {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .search-bar input {
@@ -63,7 +73,7 @@ h3{
   border-radius: 50px;
   outline: none;
   transition: border 0.4s, box-shadow 0.4s;
-  font-size: 14px;
+  font-size: 16px;
   font-family: 'TT Travels';
   color: var(--dark-gray);
 }
@@ -121,12 +131,23 @@ h3{
   font-weight: 400;
 }
 
+.close-icon{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: 0.4s ease-out;
+}
+
+.close-icon:hover{
+  transform: translateY(-2px);
+}
+
 
 @media (hover: hover) {
   a:hover {
     color: var(--orange);
     transform: translateY(-2px);
-    transition: 0.4s ease-in-out;
+    transition: 0.4s ease-out;
   }
 }
 
