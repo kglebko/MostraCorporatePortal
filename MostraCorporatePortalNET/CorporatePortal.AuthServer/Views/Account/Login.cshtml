@@ -225,7 +225,7 @@ body {
 
                 <img id="togglePassword"
                      class="password-toggle"
-                     src="/icons/hide_password_icon.svg"
+                     src="/icons/show_password_icon.svg"
                      alt="toggle password" />
             </div>
         </div>
@@ -259,10 +259,10 @@ toggleIcon.addEventListener("click", function () {
 
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        toggleIcon.src = "/icons/show_password_icon.svg";
+        toggleIcon.src = "/icons/hide_password_icon.svg";
     } else {
         passwordInput.type = "password";
-        toggleIcon.src = "/icons/hide_password_icon.svg";
+        toggleIcon.src = "/icons/show_password_icon.svg";
     }
 
 });

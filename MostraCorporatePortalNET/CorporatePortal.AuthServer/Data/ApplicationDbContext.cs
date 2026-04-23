@@ -21,11 +21,9 @@ public class ApplicationDbContext : IdentityDbContext<Collaborator>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
-        // Configure Collaborator (IdentityUser) table
+        
         modelBuilder.Entity<Collaborator>().ToTable("AspNetUsers");
         
-        // Configure additional properties
         modelBuilder.Entity<Collaborator>().Property(c => c.LastName)
             .HasColumnName("last_name")
             .IsRequired()
@@ -83,8 +81,7 @@ public class ApplicationDbContext : IdentityDbContext<Collaborator>
         modelBuilder.Entity<Collaborator>().Property(c => c.CreatedAt)
             .HasColumnName("created_at")
             .IsRequired();
-
-        // Configure relationships
+        
         modelBuilder.Entity<Collaborator>()
             .HasOne(c => c.Position)
             .WithMany(p => p.Collaborators)
@@ -115,8 +112,7 @@ public class ApplicationDbContext : IdentityDbContext<Collaborator>
             .WithMany(r => r.Collaborators)
             .HasForeignKey(c => c.RoleId)
             .OnDelete(DeleteBehavior.Restrict);
-
-        // Configure other tables
+        
         modelBuilder.Entity<Position>().ToTable("positions");
         modelBuilder.Entity<Position>().Property(p => p.Id).HasColumnName("id").ValueGeneratedOnAdd();
         modelBuilder.Entity<Position>().Property(p => p.Name).HasColumnName("name").IsRequired();
