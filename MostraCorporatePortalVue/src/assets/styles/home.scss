@@ -89,6 +89,7 @@
 }
 
 .marker-icon{
+  margin-top: 4px;
   width: 8px;
 }
 
@@ -162,42 +163,38 @@
   color: $orange;
 }
 
-.events{
+.home-events{
   display: flex;
   column-gap: 40px;
 }
 
-.events-list{
+.home-events-list{
   flex: 1;
   display: flex;
   flex-direction: column;
   row-gap: 8px;
 }
 
-.event-date{
+.home-event-date{
   font-weight: 600;
   color: $orange;
 }
 
-.event-description{
+.home-event-description{
   color: $gray;
   font-weight: 400;
 }
 
-.event-description:hover{
-  color: $orange;
-}
-
-.calendar {
+.home-calendar {
   min-width: 240px;
 }
 
-.calendar-month {
+.home-calendar-month {
   margin-bottom: 16px;
   text-transform: capitalize;
 }
 
-.calendar-weekdays {
+.home-calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   font-size: $lt;
@@ -206,36 +203,44 @@
   text-align: center;
 }
 
-.calendar-grid {
+.home-calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   column-gap: 6px;
   row-gap: 8px;
 }
 
-.calendar-day {
+.home-calendar-day {
   position: relative;
   height: 36px;
   width: 36px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: $sm;
   border-radius: 50%;
+
+  &.has-event {
+    position: relative;
+  }
 }
 
-.calendar-day.today {
-  background: $orange;
-  color: white;
+.home-calendar-day.today {
+  background: #ffefd6;
+  font-weight: 700;
+  color: $orange;
 }
 
-.calendar-day.has-event .event-dot {
+.home-event-dot {
   position: absolute;
   bottom: 4px;
-  width: 4px;
-  height: 4px;
-  background: $orange;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
+  background-color: var(--orange);
 }
 
 .tasks{
@@ -336,7 +341,7 @@
 }
 
 .game-block{
-  margin-top: 20px;
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
   gap: 16px;

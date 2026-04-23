@@ -54,10 +54,9 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 
-// уникальные значения
-
 const uniqueDepartments = computed(() => {
   return [...new Set(employees.value.map(e => e.department))]
+  .sort((a, b) => a.localeCompare(b, 'ru'))
 })
 
 // toggle

@@ -49,8 +49,8 @@ onBeforeUnmount(() => {
       <nav>
         <RouterLink :to="{ name: 'home' }">Главная</RouterLink>
         <RouterLink :to="{ name: 'corporateLife' }">Корпоративная жизнь</RouterLink>
-        <RouterLink :to="{ name: 'training' }">Обучение</RouterLink>
         <RouterLink :to="{ name: 'events' }">События</RouterLink>
+        <RouterLink :to="{ name: 'training' }">Обучение</RouterLink>
         <RouterLink :to="{ name: 'forNew' }">Новичку</RouterLink>
         <RouterLink :to="{ name: 'employees' }">Сотрудники</RouterLink>
       </nav>

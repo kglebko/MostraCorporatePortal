@@ -4,39 +4,74 @@ import DashboardCard from '@/components/DashboardCard.vue'
 import '@/assets/styles/home.scss'
 import newsService from '@/services/newsService'
 import type { News } from '@/types/News'
-import { getNewsImage , formatDate} from '@/utils/helpers'
+import { getNewsImage, formatDate } from '@/utils/helpers'
+import eventService from '@/services/eventService'
+import type { Event } from '@/types/Event'
 
+const eventsData = ref<Event[]>([])
 const latestNews = ref<News[]>([])
+const upcomingEvents = ref<Event[]>([])
 
-onMounted(async () => {
-  latestNews.value = await newsService.getLatest(4)
-})
+const now = new Date()
 
-const today = new Date()
-const currentMonth = today.getMonth()
-const currentYear = today.getFullYear()
+const currentMonth = now.getMonth()
+const currentYear = now.getFullYear()
 
 const monthName = computed(() =>
-  today.toLocaleString('ru-RU', { month: 'long' })
+  new Date().toLocaleString('ru-RU', { month: 'long' })
 )
 
 const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
 
 const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay()
-
 const startOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1
 
-const events = [
-  { date: 9, title: 'Вебинар' },
-  { date: 17, title: 'Квиз' },
-  { date: 18, title: 'Квиз' },
-  { date: 19, title: 'Квиз' },
-  { date: 27, title: 'Вебинар' }
-]
+onMounted(async () => {
+  latestNews.value = await newsService.getLatest(4)
+  eventsData.value = await eventService.getAll()
 
-const hasEvent = (day: number | null) => {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  upcomingEvents.value = eventsData.value
+    .filter(ev => {
+      const end = new Date(ev.dateEnd || ev.dateStart)
+      end.setHours(0, 0, 0, 0)
+      return end >= today
+    })
+    .sort((a, b) =>
+      new Date(a.dateStart).getTime() -
+      new Date(b.dateStart).getTime()
+    )
+    .slice(0, 4)
+})
+
+const isToday = (day: number | null): boolean => {
   if (!day) return false
-  return events.some(e => e.date === day)
+
+  const d = new Date(currentYear, currentMonth, day)
+  const t = new Date()
+  t.setHours(0, 0, 0, 0)
+  d.setHours(0, 0, 0, 0)
+
+  return d.getTime() === t.getTime()
+}
+
+const hasEvent = (day: number | null): boolean => {
+  if (!day) return false
+
+  const date = new Date(currentYear, currentMonth, day)
+  date.setHours(0, 0, 0, 0)
+
+  return eventsData.value.some(ev => {
+    const start = new Date(ev.dateStart)
+    const end = new Date(ev.dateEnd || ev.dateStart)
+
+    start.setHours(0, 0, 0, 0)
+    end.setHours(0, 0, 0, 0)
+
+    return date >= start && date <= end
+  })
 }
 
 const calendarDays = computed(() => {
@@ -53,12 +88,49 @@ const calendarDays = computed(() => {
   return days
 })
 
+const formatEventDateRange = (start: string, end?: string): string => {
+  const startDate = new Date(start)
+  const endDate = new Date(end || start)
+  
+  const startDay = startDate.getDate()
+  const endDay = endDate.getDate()
+  const startMonth = startDate.getMonth()
+  const endMonth = endDate.getMonth()
+  const startYear = startDate.getFullYear()
+  const endYear = endDate.getFullYear()
+  
+  const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 
+                  'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+  
+  if (!end || start === end) {
+    return `${startDay} ${months[startMonth]} ${startYear}`
+  }
+  if (startMonth === endMonth && startYear === endYear) {
+    return `${startDay}-${endDay} ${months[startMonth]} ${startYear}`
+  }
+
+  if (startYear === endYear) {
+    return `${startDay} ${months[startMonth]} — ${endDay} ${months[endMonth]} ${startYear}`
+  }
+  return `${startDay} ${months[startMonth]} ${startYear} — ${endDay} ${months[endMonth]} ${endYear}`
+}
+
+const formatDateRange = (start: string, end?: string): string => {
+  const s = new Date(start)
+  const e = new Date(end || start)
+
+  if (!end || start === end) {
+    return s.toLocaleDateString('ru-RU')
+  }
+
+  return `${s.toLocaleDateString('ru-RU')} — ${e.toLocaleDateString('ru-RU')}`
+}
+
 const courses = [
   { title: 'Профессиональная этика', progress: 25 },
   { title: 'Введение в корпоративные процессы', progress: 75 },
   { title: 'Управление временем и приоритетами', progress: 50 }
 ]
-
 </script>
 
 <template>
@@ -73,7 +145,7 @@ const courses = [
               icon="/icons/corporate_life_icon.svg"
               :link="{ name: 'newsList' }"
               linkText="Все новости"
-              style='width: 75%;'
+              style='width: 70%;'
               >
 
             <div class="news-block" v-if="latestNews.length">
@@ -114,7 +186,7 @@ const courses = [
           <DashboardCard
               title="Опросы"
               icon="/icons/polls_icon.svg"
-              style='width: 25%;'
+              style='width: 30%;'
               >
 
               <div class="polls">
@@ -151,7 +223,7 @@ const courses = [
           <DashboardCard
               title="Дни рождения"
               icon="/icons/birthdays_icon.svg"
-              style='width: 20%;'
+              style='width: 30%;'
               >
 
               <div class="birthdays">
@@ -200,17 +272,17 @@ const courses = [
               icon="/icons/events_icon.svg"
               link="/events"
               linkText="Все события"
-              style='width: 80%;'
+              style='width: 70%;'
               >
 
-              <div class="events">
+              <div class="home-events">
                 
-                <div class="calendar">
-                  <p class="calendar-month">
+                <div class="home-calendar">
+                  <p class="home-calendar-month">
                     {{ monthName.charAt(0).toUpperCase() + monthName.slice(1) }}
                   </p>
 
-                  <div class="calendar-weekdays">
+                  <div class="home-calendar-weekdays">
                     <span>Пн</span>
                     <span>Вт</span>
                     <span>Ср</span>
@@ -220,39 +292,40 @@ const courses = [
                     <span>Вс</span>
                   </div>
 
-                  <div class="calendar-grid">
-                    <div
+                  <div class="home-calendar-grid">
+                    <div class="home-calendar-day"
                       v-for="(day, index) in calendarDays"
                       :key="index"
-                      class="calendar-day"
                       :class="{
-                        today: day === today.getDate(),
+                        today: isToday(day),
                         'has-event': hasEvent(day)
                       }"
                     >
                       <span v-if="day">{{ day }}</span>
-                      <div v-if="hasEvent(day)" class="event-dot"></div>
+
+                      <div v-if="hasEvent(day)" class="home-event-dot"></div>
                     </div>
                   </div>
                 </div>
 
-                <div class="events-list">
-                  <div class="list-item">
-                    <p class="event-date">9 февраля</p>
-                    <a class="event-description">Вебинар «Планы и приоритеты на 2026 год»</a>
-                  </div>
-                  <div class="list-item">
-                    <p class="event-date">17-19 февраля</p>
-                    <a class="event-description">Корпоративный онлайн-квиз для сотрудников всех подразделений</a>
-                  </div>
-                  <div class="list-item">
-                    <p class="event-date">27 февраля</p>
-                    <a class="event-description">Вебинар «Планы и приоритеты на 2026 год»</a>
+                <div class="home-events-list">
+                  <div v-for="ev in upcomingEvents" :key="ev.id" class="list-item">
+
+                    <p class="home-event-date">
+                      {{ formatEventDateRange(ev.dateStart, ev.dateEnd) }}
+                    </p>
+
+                    <p class="home-event-description">
+                      {{ ev.title }}
+                    </p>
+
                   </div>
                 </div>
+
               </div>
 
           </DashboardCard>
+
         </div>
       </div>
 
@@ -262,7 +335,7 @@ const courses = [
             icon="/icons/tasks_icon.svg"
             link="/training"
             linkText="Обучение"
-            style='height: 80%;'
+            style='height: 86%;'
             >
 
             <div class="tasks">
@@ -333,7 +406,7 @@ const courses = [
             </div>
         </DashboardCard>
 
-        <div class="game">
+        <div class="game" style="height: 20%;">
             <div class="game-block">
               <div class="game-logo">
                 <img src="/icons/logo_emblem_white.svg">

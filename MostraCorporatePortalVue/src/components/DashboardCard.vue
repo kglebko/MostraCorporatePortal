@@ -42,7 +42,7 @@ const hasHeader = computed(() => {
 
 .dashboard-item{
   display: flex;
-  min-width: 280px;
+  min-width: 200px;
   flex-direction: column;
   background: white;
   border-radius: $border-radius;

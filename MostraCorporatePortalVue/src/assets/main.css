@@ -11,6 +11,7 @@
   min-height: calc(100vh - 60px);
   background-color: var(--white);
   max-width: 1360px; 
+  user-select: none;
 }
 
 a{
