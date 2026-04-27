@@ -5,12 +5,12 @@ import type { Employee } from '@/types/Employee'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import InverseButton from '@/components/ui/InverseButton.vue'
 import positionsService, { type PositionDto } from '@/services/positionsService'
+import authService from '@/services/authService'
 
 const positions = ref<PositionDto[]>([])
 
 const isFilterOpen = ref(false)
 
-// селекты
 const isPositionOpen = ref(false)
 const isDepartmentOpen = ref(false)
 
@@ -22,7 +22,8 @@ const employees = ref<Employee[]>([])
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 
-// загрузка
+const currentUserId = ref('')
+
 const loadEmployees = async () => {
   isLoading.value = true
   error.value = null
@@ -44,9 +45,14 @@ const loadPositions = async () => {
   }
 }
 
-onMounted(() => {
-  loadEmployees()
-  loadPositions()
+onMounted(async () => {
+  await loadEmployees()
+  await loadPositions()
+
+  const currentUser = await authService.getUser()
+
+  currentUserId.value = currentUser?.profile?.sub || ''
+
   document.addEventListener('click', handleClickOutside)
 })
 
@@ -59,7 +65,6 @@ const uniqueDepartments = computed(() => {
   .sort((a, b) => a.localeCompare(b, 'ru'))
 })
 
-// toggle
 const togglePosition = (pos: string) => {
   if (selectedPositions.value.includes(pos)) {
     selectedPositions.value = selectedPositions.value.filter(p => p !== pos)
@@ -76,7 +81,6 @@ const toggleDepartment = (dep: string) => {
   }
 }
 
-// удаление
 const removePosition = (pos: string) => {
   selectedPositions.value = selectedPositions.value.filter(p => p !== pos)
 }
@@ -85,13 +89,11 @@ const removeDepartment = (dep: string) => {
   selectedDepartments.value = selectedDepartments.value.filter(d => d !== dep)
 }
 
-// сброс
 const resetFilters = () => {
   selectedPositions.value = []
   selectedDepartments.value = []
 }
 
-// клик вне
 const handleClickOutside = (e: MouseEvent) => {
   const target = e.target as HTMLElement
   if (!target.closest('.select')) {
@@ -100,7 +102,6 @@ const handleClickOutside = (e: MouseEvent) => {
   }
 }
 
-// фильтрация
 const filteredEmployees = computed(() => {
   return employees.value.filter(emp => {
     const matchesSearch =
@@ -254,7 +255,17 @@ const filteredEmployees = computed(() => {
           <td colspan="6">Ошибка: {{ error }}</td>
         </tr>
         <tr v-for="emp in filteredEmployees" :key="emp.id">
-          <td>{{ emp.fullName }}</td>
+          <td>
+            <RouterLink
+              :to="
+                emp.id === currentUserId
+                  ? { name: 'profileDetails', params: { id: emp.id } }
+                  : { name: 'employeeDetails', params: { id: emp.id } }
+              "
+            >
+              {{ emp.fullName }}
+            </RouterLink>
+          </td>
           <td>{{ emp.position }}</td>
           <td>{{ emp.department }}</td>
           <td><a :href="`mailto:${emp.email}`">{{ emp.email }}</a></td>

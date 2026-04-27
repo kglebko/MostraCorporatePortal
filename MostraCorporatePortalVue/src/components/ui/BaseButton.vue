@@ -52,6 +52,7 @@ const iconPos = props.iconPosition || 'right'
 <style scoped lang="scss">
 .btn {
   background: $orange;
+  height: fit-content;
   color: white;
   border: none;
   border-radius: 50px;

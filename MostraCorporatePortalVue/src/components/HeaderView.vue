@@ -57,7 +57,7 @@ onBeforeUnmount(() => {
   
       <div class="user_block" ref="menuRef" v-if="currentUser">
         <RouterLink 
-          :to="{ name: 'employeeDetails', params: { id: currentUser.sub } }"
+          :to="{ name: 'profileDetails', params: { id: currentUser.sub } }"
           class="user_info"
         >
           <p class="namelabel">{{ currentUser.lastName }} {{ currentUser.firstName }}</p>

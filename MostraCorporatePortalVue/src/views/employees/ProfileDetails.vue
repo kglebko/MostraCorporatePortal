@@ -1,28 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
 import DashboardCard from '@/components/DashboardCard.vue'
-import collaboratorsService, { type CollaboratorDto } from '@/services/collaboratorsService'
-import BaseButton from '@/components/ui/BaseButton.vue'
+import apiService from '@/services/apiService'
+import type { Collaborator } from '@/types/Collaborator'
 
-const route = useRoute()
-
-const user = ref<CollaboratorDto | null>(null)
+const user = ref<Collaborator | null>(null)
 const loading = ref(true)
 
 onMounted(async () => {
   try {
-
-    const id = route.params.id as string
-
-    if (!id) {
-      throw new Error('ID не передан')
-    }
-
-    user.value = await collaboratorsService.getById(id)
-
-  } catch (e) {
-    console.error('Ошибка загрузки сотрудника', e)
+    user.value = await apiService.get<Collaborator>('/profile')
+  } catch (error) {
+    console.error(error)
   } finally {
     loading.value = false
   }
@@ -33,18 +22,9 @@ onMounted(async () => {
   <div v-if="loading">Загрузка...</div>
 
   <div v-else-if="user">
-
-    <div class="page-header">
-        <div class="page-title">
-          <h1>{{ user.fullName }}</h1>
-          <h2>{{ user.position }}</h2>
-        </div>
-        <BaseButton @click="">
-            Сообщение
-            <template #icon>
-              <img src="@/assets/icons/message_icon.svg" />
-            </template>
-        </BaseButton>
+    <div class="page-title">
+      <h1>{{ user.fullName }}</h1>
+      <h2>{{ user.role }}</h2>
     </div>
 
     <div class="dashboard">
@@ -58,48 +38,63 @@ onMounted(async () => {
             </div>
             <div class="user-information">
 
-                <div class="about-user-block">
+              <div class="about-user-block">
                 <div class="info-row">
-                    <p class="user-about">Должность:</p>
-                    <p class="user-info">{{ user.position }}</p>
+                  <p class="user-about">Должность:</p>
+                  <p class="user-info">{{ user.position }}</p>
                 </div>
 
                 <div class="info-row">
-                    <p class="user-about">Подразделение:</p>
-                    <RouterLink
+                  <p class="user-about">Подразделение:</p>
+                  <RouterLink
                     :to="{ name: 'departmentDetails', params: { id: user.departmentId } }"
                     class="user-info"
-                    >
+                  >
                     {{ user.department }}
-                    </RouterLink>
+                  </RouterLink>
                 </div>
 
                 <div class="info-row">
-                    <p class="user-about">Организация:</p>
-                    <RouterLink
+                  <p class="user-about">Организация:</p>
+                  <RouterLink
                     :to="{ name: 'organizationDetails', params: { id: user.organizationId } }"
                     class="user-info"
-                    >
+                  >
                     {{ user.organization }}
-                    </RouterLink>
+                  </RouterLink>
                 </div>
 
-                </div>
+              </div>
 
-                <div class="about-user-block">
-                <div class="info-row">
-                    <p class="user-about">E-mail:</p>
-                    <p class="user-info">{{ user.email }}</p>
-                </div>
-                <div class="info-row">
-                    <p class="user-about">Внутренний телефон:</p>
-                    <p class="user-info">{{ user.internalPhone }}</p>
-                </div>
+              <div class="about-user-block">
                 <div class="info-row">
                   <p class="user-about">Формат работы:</p>
                   <p class="user-info">{{ user.workFormat }}</p>
                 </div>
-            </div>
+
+                <div class="info-row">
+                  <p class="user-about">Внутренний телефон:</p>
+                  <p class="user-info">{{ user.internalPhone }}</p>
+                </div>
+              </div>
+
+              <div class="about-user-block">
+                <div class="info-row">
+                  <p class="user-about">Логин:</p>
+                  <p class="user-info">{{ user.username }}</p>
+                </div>
+
+                <div class="info-row">
+                  <p class="user-about">E-mail:</p>
+                  <p class="user-info">{{ user.email }}</p>
+                </div>
+
+                <div class="info-row">
+                  <p class="user-about">Мобильный телефон:</p>
+                  <p class="user-info">{{ user.mobilePhone }}</p>
+                </div>
+              </div>
+
               <div class="about-user-block">
                 <div class="info-row">
                   <p class="user-about">Дата рождения:</p>
@@ -157,9 +152,10 @@ onMounted(async () => {
 
       </div>
     </div>
-
   </div>
+
 </template>
+
 
 <style scoped lang="scss">
 
@@ -254,3 +250,4 @@ a{
   color: $gray;
 }
 </style>
+

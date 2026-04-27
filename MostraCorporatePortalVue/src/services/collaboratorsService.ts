@@ -6,8 +6,10 @@ export interface CollaboratorDto {
   birthDate: string
   position: string
   department: string
+  departmentId: number
   workFormat?: string
   organization: string
+  organizationId: number
   role: string
   login: string
   email: string
@@ -41,7 +43,7 @@ class CollaboratorsService {
   }
 
   // Получить сотрудника по ID
-  async getById(id: number): Promise<CollaboratorDto> {
+  async getById(id: string): Promise<CollaboratorDto> {
     return apiService.get<CollaboratorDto>(`/collaborators/${id}`)
   }
 
