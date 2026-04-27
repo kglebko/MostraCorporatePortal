@@ -286,19 +286,24 @@ computed<Event[]>(()=>{
    )
  }
 
- if(searchDate.value){
+ if (searchDate.value) {
 
-   events = events.filter(ev=>{
+  const selectedDate = toDay(new Date(searchDate.value)).getTime()
 
-    const endDate =
-      ev.dateEnd || ev.dateStart
+  events = events.filter(ev => {
+
+    const start = toDay(new Date(ev.dateStart)).getTime()
+
+    const end = toDay(
+      new Date(ev.dateEnd || ev.dateStart)
+    ).getTime()
 
     return (
-      searchDate.value>=ev.dateStart &&
-      searchDate.value<=endDate
+      selectedDate >= start &&
+      selectedDate <= end
     )
-   })
- }
+  })
+}
 
  return events.sort(
   (a,b)=>
@@ -519,7 +524,7 @@ const escapeHtml = (str:string):string => {
                  ]"
                  @click.stop="selectEvent(ev.id)"
                  v-html="escapeHtml(ev.title)"></div>
-            <div v-if="day.events.length > 2" class="more-events" @click.stop="selectEvent(day.events[0]!.id)">
+            <div v-if="day.events.length > 2" class="more-events" @click.stop="selectEvent(day.events[2]!.id)">
               +{{ day.events.length - 2 }} ещё
             </div>
           </div>
