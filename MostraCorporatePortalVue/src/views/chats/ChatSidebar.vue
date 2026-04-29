@@ -18,7 +18,7 @@ watch(
 <template>
   <aside class="chat-sidebar">
     <div class="chat-sidebar__search search-bar">
-      <span class="icon_search">⌕</span>
+      <img class="icon_search" src="@/assets/icons/search_icon.svg" />
       <input
         v-model="chatsStore.searchQuery"
         type="text"

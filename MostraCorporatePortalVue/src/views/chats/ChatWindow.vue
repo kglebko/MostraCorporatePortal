@@ -68,8 +68,8 @@ const menuStats = computed(() => {
   return [
     { label: 'Тип чата', value: chatsStore.selectedChat.type === 'Direct' ? 'Личный' : 'Групповой' },
     { label: 'Участников', value: String(chatsStore.selectedChat.participants.length) },
-    { label: 'Сообщений', value: String(chatsStore.messages.length) },
-    { label: 'Непрочитанных', value: String(selectedChatListItem.value?.unreadCount ?? 0) }
+    { label: 'Сообщений', value: String(chatsStore.messages.length) }
+    /*{ label: 'Непрочитанных', value: String(selectedChatListItem.value?.unreadCount ?? 0) }*/
   ]
 })
 
@@ -129,7 +129,9 @@ function goToDirectParticipantProfile() {
 <template>
   <section class="chat-window">
     <div v-if="!chatsStore.selectedChat" class="chat-window__placeholder">
-      <div class="chat-window__placeholder-icon">💬</div>
+      <div class="chat-window__placeholder-icon">
+        <img src="@/assets/icons/start_chat_icon.svg">
+      </div>
       <p>{{ placeholderText }}</p>
     </div>
 
@@ -151,7 +153,7 @@ function goToDirectParticipantProfile() {
           </div>
           <div>
             <h3>{{ chatsStore.selectedChat.name }}</h3>
-            <p v-if="subtitle">{{ subtitle }}</p>
+            <p v-if="subtitle" class="chat-subtitle">{{ subtitle }}</p>
           </div>
         </button>
         <div class="chat-window__more-wrap">
@@ -166,9 +168,6 @@ function goToDirectParticipantProfile() {
             </div>
             <p class="chat-window__menu-title participants">Участники</p>
             <p v-for="name in formattedParticipants" :key="name" class="chat-window__menu-item">{{ name }}</p>
-            <button class="chat-window__menu-action" disabled>
-              Скоро: отправка файлов и изображений
-            </button>
           </div>
         </div>
       </header>
@@ -186,11 +185,30 @@ function goToDirectParticipantProfile() {
             :class="{ own: message.isOwn }"
           >
             <div class="chat-message__bubble">
-              <p class="chat-message__text">{{ message.messageText }}</p>
+              <p v-if="chatsStore.selectedChat?.type !== 'Direct' && !message.isOwn"
+                class="chat-message__author">
+                {{ message.senderName }}
+              </p>
+
+              <p class="chat-message__text">
+                {{ message.messageText }}
+              </p>
+
               <div class="chat-message__meta">
-                <span>{{ new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}</span>
-                <span v-if="message.isOwn" class="chat-message__status">{{ message.isReadByEveryone ? '✓✓' : '✓' }}</span>
+                <span>
+                  {{ new Date(message.createdAt).toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  }) }}
+                </span>
+
+                <span
+                  v-if="message.isOwn"
+                  class="chat-message__status">
+                  {{ message.isReadByEveryone ? '✓✓' : '✓' }}
+                </span>
               </div>
+
             </div>
           </div>
         </template>
