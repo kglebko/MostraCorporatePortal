@@ -128,6 +128,26 @@ nav a:hover{
   transform: translateY(-2px);
 }
 
+.chats-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chats-badge {
+  min-width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: $orange;
+  color: $white;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+}
+
 @media (max-width: 1440px) {
   .header-container{
     max-width: $mw1200;

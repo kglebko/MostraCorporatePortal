@@ -1,7 +1,7 @@
 import apiService from './apiService'
 
 export interface CollaboratorDto {
-  id: number
+  id: string
   fullName: string
   birthDate: string
   position: string

@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import DashboardCard from '@/components/DashboardCard.vue'
 import collaboratorsService, { type CollaboratorDto } from '@/services/collaboratorsService'
 import BaseButton from '@/components/ui/BaseButton.vue'
 
 const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 
 const user = ref<CollaboratorDto | null>(null)
 const loading = ref(true)
+const isSelfProfile = ref(false)
 
 onMounted(async () => {
   try {
@@ -20,6 +24,7 @@ onMounted(async () => {
     }
 
     user.value = await collaboratorsService.getById(id)
+    isSelfProfile.value = String(user.value?.id) === authStore.userClaims?.sub
 
   } catch (e) {
     console.error('Ошибка загрузки сотрудника', e)
@@ -27,6 +32,20 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+const openMessageDialog = async () => {
+  if (!user.value?.id) {
+    return
+  }
+
+  await router.push({
+    name: 'chats',
+    query: {
+      employeeId: String(user.value.id),
+      openAt: String(Date.now())
+    }
+  })
+}
 </script>
 
 <template>
@@ -39,7 +58,7 @@ onMounted(async () => {
           <h1>{{ user.fullName }}</h1>
           <h2>{{ user.position }}</h2>
         </div>
-        <BaseButton @click="">
+        <BaseButton v-if="!isSelfProfile" @click="openMessageDialog">
             Сообщение
             <template #icon>
               <img src="@/assets/icons/message_icon.svg" />

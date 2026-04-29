@@ -1,0 +1,367 @@
+.chats-page {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  height: calc(100vh - 220px);
+  min-height: 520px;
+  border: 1px solid var(--light-gray);
+  border-radius: $border-radius;
+  overflow: hidden;
+}
+
+.chat-sidebar {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--light-gray);
+  background: #fafafa;
+  min-height: 0;
+}
+
+.chat-sidebar__search {
+  width: auto;
+  padding: 20px;
+}
+
+.chat-sidebar__search .icon_search {
+  left: 34px;
+}
+
+.chat-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  min-height: 0;
+}
+
+.chat-search-group__title {
+  font-size: 12px;
+  color: var(--gray);
+  text-transform: uppercase;
+  padding: 10px 16px 4px;
+  font-weight: 600;
+}
+
+.chat-list-item {
+  border: none;
+  border-bottom: 1px solid #ececec;
+  background: transparent;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  overflow: hidden;
+}
+
+.chat-list-item.active {
+  background: #eef5fa;
+}
+
+.chat-list-item__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  overflow: hidden;
+}
+
+.chat-list-item__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat-list-item__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-list-item__top,
+.chat-list-item__bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.chat-list-item__name {
+  color: var(--blue);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-list-item__message {
+  color: var(--gray);
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-list-item__time {
+  color: var(--gray);
+  font-size: 14px;
+}
+
+.chat-list-item__unread {
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: white;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  height: 100%;
+  min-height: 0;
+}
+
+.chat-window__placeholder {
+  margin: auto;
+  text-align: center;
+  color: var(--gray);
+}
+
+.chat-window__placeholder-icon {
+  font-size: 50px;
+  margin-bottom: 12px;
+}
+
+.chat-window__header {
+  height: 82px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #ececec;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-window__header-title {
+  display: grid;
+  grid-template-columns: 44px auto;
+  column-gap: 10px;
+  align-items: center;
+  border: none;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+}
+
+.chat-window__header-title.clickable {
+  cursor: pointer;
+}
+
+.chat-window__header-title.clickable:hover h3 {
+  color: var(--orange);
+}
+
+.chat-window__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--orange);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.chat-window__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat-window__header p {
+  color: var(--gray);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+.chat-window__more {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.chat-window__more:hover {
+  background: #f5f5f5;
+}
+
+.chat-window__more-wrap {
+  position: relative;
+}
+
+.chat-window__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  min-width: 280px;
+  border: 1px solid var(--light-gray);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  padding: 10px 12px;
+  z-index: 5;
+}
+
+.chat-window__menu-title {
+  font-size: 13px;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+
+.chat-window__menu-title.participants {
+  margin-top: 12px;
+}
+
+.chat-window__menu-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chat-window__menu-stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.chat-window__menu-stat strong {
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.chat-window__menu-item {
+  font-size: 14px;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+
+.chat-window__menu-action {
+  width: 100%;
+  margin-top: 10px;
+  border: 1px dashed var(--light-gray);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #fafafa;
+  color: var(--gray);
+  font-family: 'TT Travels';
+  font-size: 13px;
+  text-align: left;
+}
+
+.chat-window__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+.chat-window__empty {
+  margin: auto;
+  color: var(--gray);
+  font-weight: 400;
+}
+
+.chat-window__date-divider {
+  align-self: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--gray);
+  margin: 8px 0;
+}
+
+.chat-message {
+  display: flex;
+}
+
+.chat-message.own {
+  justify-content: flex-end;
+}
+
+.chat-message__bubble {
+  max-width: 68%;
+  background: #f2f4f5;
+  padding: 10px 12px;
+  border-radius: 14px;
+}
+
+.chat-message.own .chat-message__bubble {
+  background: rgba(246, 112, 1, 0.15);
+}
+
+.chat-message__text {
+  white-space: pre-wrap;
+  font-weight: 400;
+}
+
+.chat-message__meta {
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.chat-message__status {
+  letter-spacing: -1px;
+}
+
+.chat-window__input {
+  border-top: 1px solid #ececec;
+  padding: 12px 16px;
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+  background: #fff;
+}
+
+.chat-window__input input {
+  flex: 1;
+  border: 1px solid var(--light-gray);
+  border-radius: 20px;
+  padding: 12px 16px;
+  outline: none;
+  font-family: 'TT Travels';
+}
+
+.chat-window__input button {
+  border: none;
+  border-radius: 20px;
+  background: var(--orange);
+  color: white;
+  padding: 0 20px;
+  font-family: 'TT Travels';
+  cursor: pointer;
+}
+
+@media (max-height: 820px) {
+  .chats-page {
+    height: calc(100vh - 160px);
+  }
+}

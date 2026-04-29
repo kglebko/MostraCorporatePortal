@@ -2,13 +2,16 @@
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useChatsStore } from '@/stores/chats'
 import '@/assets/styles/header.scss'
 
 
 const authStore = useAuthStore()
+const chatsStore = useChatsStore()
 const router = useRouter()
 
 const currentUser = computed(() => authStore.userClaims)
+const unreadChats = computed(() => chatsStore.totalUnreadCount)
 const isMenuOpen = ref(false)
 const menuRef = ref<HTMLElement | null>(null)
 
@@ -30,6 +33,9 @@ const handleClickOutside = (event: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  if (authStore.isAuthenticated) {
+    chatsStore.bootstrap()
+  }
 })
 
 onBeforeUnmount(() => {
@@ -53,6 +59,10 @@ onBeforeUnmount(() => {
         <RouterLink :to="{ name: 'training' }">Обучение</RouterLink>
         <RouterLink :to="{ name: 'forNew' }">Новичку</RouterLink>
         <RouterLink :to="{ name: 'employees' }">Сотрудники</RouterLink>
+        <RouterLink :to="{ name: 'chats' }" class="chats-link">
+          Чаты
+          <span v-if="unreadChats > 0" class="chats-badge">{{ unreadChats }}</span>
+        </RouterLink>
       </nav>
   
       <div class="user_block" ref="menuRef" v-if="currentUser">

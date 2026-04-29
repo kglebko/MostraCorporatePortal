@@ -17,6 +17,7 @@ const routes = [
   { path: '/logout-callback', name: 'logoutCallback', component: () => import('@/views/LogoutCallbackView.vue') },
   { path: '/news', name: 'newsList', component: () => import('@/views/corporate-life/NewsList.vue'), meta: { requiresAuth: true } },
   { path: '/news/:id', name: 'newsItem', component: () => import('@/views/corporate-life/NewsItem.vue'), meta: { requiresAuth: true } },
+  { path: '/chats', name: 'chats', component: () => import('@/views/chats/ChatsPage.vue'), meta: { requiresAuth: true } }
 ]
 
 const router = createRouter({
