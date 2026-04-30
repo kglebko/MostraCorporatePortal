@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { onMounted, onBeforeUnmount, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useChatsStore } from '@/stores/chats'
 import ChatSidebar from './ChatSidebar.vue'
@@ -10,11 +10,19 @@ const route = useRoute()
 const chatsStore = useChatsStore()
 
 onMounted(async () => {
-  await chatsStore.bootstrap()
+  chatsStore.isChatPageActive = true
+
+  /*await chatsStore.bootstrap()*/
+
   const employeeId = route.query.employeeId
   if (typeof employeeId === 'string' && employeeId) {
     await chatsStore.openByEmployee(employeeId)
   }
+})
+
+onBeforeUnmount(() => {
+  chatsStore.isChatPageActive = false
+  chatsStore.selectedChat = null
 })
 
 watch(

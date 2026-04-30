@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import newsService from '@/services/newsService'
 import type { News } from '@/types/News'
+import BaseButton from '@/components/ui/BaseButton.vue'
 import { getNewsImage , formatDate} from '@/utils/helpers'
 
 const newsList = ref<News[]>([])
+const visibleCount = ref(6)
+const pageSize = 6
+
+const visibleNews = computed(() => newsList.value.slice(0, visibleCount.value))
+const canLoadMore = computed(() => visibleCount.value < newsList.value.length)
 
 onMounted(async () => {
   newsList.value = await newsService.getAll()
 })
+
+function showMore() {
+  visibleCount.value += pageSize
+}
 </script>
 
 <template>
@@ -20,7 +30,7 @@ onMounted(async () => {
 <div class="news">
 
   <div
-    v-for="news in newsList"
+    v-for="news in visibleNews"
     :key="news.id"
     class="news-table"
   >
@@ -69,6 +79,10 @@ onMounted(async () => {
 
 </div>
 
+<div v-if="canLoadMore" class="news-load-more">
+  <BaseButton @click="showMore">Показать больше</BaseButton>
+</div>
+
 </template>
 
 <style scoped lang="scss">
@@ -77,6 +91,12 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
+}
+
+.news-load-more {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
 }
 
 .news-table{

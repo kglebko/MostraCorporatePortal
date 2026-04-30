@@ -10,6 +10,7 @@ import type { ChatDetails, ChatListItem, ChatMessage, ChatParticipant } from '@/
 export const useChatsStore = defineStore('chats', () => {
   const chats = ref<ChatListItem[]>([])
   const selectedChat = ref<ChatDetails | null>(null)
+  const isChatPageActive = ref(false)
   const messages = ref<ChatMessage[]>([])
   const searchQuery = ref('')
   const loadingChats = ref(false)
@@ -156,6 +157,10 @@ export const useChatsStore = defineStore('chats', () => {
 
     connection.on('ConversationUpdated', async (conversationId: number) => {
       await loadChats()
+
+      if (!isChatPageActive.value) {
+        return
+      }
       if (selectedChat.value?.id === conversationId) {
         await loadMessages(conversationId, true)
       }
@@ -200,6 +205,7 @@ export const useChatsStore = defineStore('chats', () => {
     sendMessage,
     openOrCreateDirect,
     openByEmployee,
-    disposeRealtime
+    disposeRealtime,
+    isChatPageActive
   }
 })

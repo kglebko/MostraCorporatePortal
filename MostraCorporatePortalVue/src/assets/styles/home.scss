@@ -379,3 +379,116 @@
   transition: 0.4s ease-out;
   cursor: pointer;
 }
+
+.birthday-empty {
+  color: $gray;
+  font-weight: 400;
+}
+
+.birthday-person {
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-family: 'TT Travels';
+  cursor: pointer;
+  transition: 0.4s ease-out;
+}
+
+.birthday-person:hover {
+  transform: translateY(-2px);
+  transition: 0.4s ease-out;
+}
+
+.birthday-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+}
+
+.birthday-modal {
+  width: 480px;
+  max-width: calc(100vw - 30px);
+  background: $white;
+  border-radius: $border-radius;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.birthday-modal p {
+  color: $gray;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.birthday-stickers {
+  display: flex;
+  justify-content: space-between;
+}
+
+.birthday-sticker {
+  border: 1px solid $light-gray;
+  background: $white;
+  border-radius: 8px;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  font-size: 28px;
+  transition: all 0.3s ease;
+}
+
+.birthday-sticker.active {
+  border-color: $orange;
+  background: #fff4ec;
+}
+
+.birthday-modal textarea {
+  font-size: 16px;
+  border: 1px solid $light-gray;
+  border-radius: 10px;
+  padding: 10px;
+  resize: none;
+  font-family: 'TT Travels';
+  transition: border-color 0.3s ease;
+}
+
+.birthday-modal textarea:focus {
+  border-color: $orange;
+  outline: none;
+}
+
+.birthday-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .birthday-modal,
+.modal-leave-active .birthday-modal {
+  transition: all 0.3s ease;
+}
+
+.modal-enter-from .birthday-modal {
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+}
+
+.modal-leave-to .birthday-modal {
+  transform: translateY(10px) scale(0.95);
+  opacity: 0;
+}

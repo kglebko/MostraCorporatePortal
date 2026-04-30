@@ -6,6 +6,42 @@ const chatsStore = useChatsStore()
 
 const chats = computed(() => chatsStore.filteredChats)
 
+function formatChatTime(dateString?: string | null) {
+  if (!dateString) return ''
+
+  const date = new Date(dateString)
+  const now = new Date()
+
+  const isToday =
+    date.getDate() === now.getDate() &&
+    date.getMonth() === now.getMonth() &&
+    date.getFullYear() === now.getFullYear()
+
+  const yesterday = new Date()
+  yesterday.setDate(now.getDate() - 1)
+
+  const isYesterday =
+    date.getDate() === yesterday.getDate() &&
+    date.getMonth() === yesterday.getMonth() &&
+    date.getFullYear() === yesterday.getFullYear()
+
+  if (isToday) {
+    return date.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
+
+  if (isYesterday) {
+    return 'Вчера'
+  }
+
+  return date.toLocaleDateString('ru-RU', {
+    day: '2-digit',
+    month: '2-digit'
+  })
+}
+
 watch(
   () => chatsStore.searchQuery,
   async () => {
@@ -13,6 +49,7 @@ watch(
     await chatsStore.loadEmployees(chatsStore.searchQuery)
   }
 )
+
 </script>
 
 <template>
@@ -75,7 +112,7 @@ watch(
           <div class="chat-list-item__top">
             <p class="chat-list-item__name">{{ chat.name }}</p>
             <span class="chat-list-item__time">
-              {{ chat.lastMessageAt ? new Date(chat.lastMessageAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '' }}
+              {{ formatChatTime(chat.lastMessageAt) }}
             </span>
           </div>
           <div class="chat-list-item__bottom">

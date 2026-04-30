@@ -7,10 +7,26 @@ import type { News } from '@/types/News'
 import { getNewsImage, formatDate } from '@/utils/helpers'
 import eventService from '@/services/eventService'
 import type { Event } from '@/types/Event'
+import collaboratorsService, { type CollaboratorDto } from '@/services/collaboratorsService'
+import { useChatsStore } from '@/stores/chats'
+import BaseButton from '@/components/ui/BaseButton.vue'
+import InverseButton from '@/components/ui/InverseButton.vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
 
 const eventsData = ref<Event[]>([])
 const latestNews = ref<News[]>([])
 const upcomingEvents = ref<Event[]>([])
+const collaborators = ref<CollaboratorDto[]>([])
+const chatsStore = useChatsStore()
+const router = useRouter()
+const birthdayModalOpen = ref(false)
+const selectedBirthdayUser = ref<CollaboratorDto | null>(null)
+const birthdayMessage = ref('С днем рождения!')
+const stickerOptions = ['🎉', '🎂', '🎈', '🥳', '🌟', '🎁']
+const selectedSticker = ref('🎉')
 
 const now = new Date()
 
@@ -29,6 +45,7 @@ const startOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1
 onMounted(async () => {
   latestNews.value = await newsService.getLatest(4)
   eventsData.value = await eventService.getAll()
+  collaborators.value = await collaboratorsService.getAll()
 
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -45,6 +62,59 @@ onMounted(async () => {
     )
     .slice(0, 4)
 })
+
+const birthdayPeople = computed(() => {
+  const today = new Date()
+  const month = today.getMonth()
+  const day = today.getDate()
+  const currentUserId = authStore.userClaims?.sub
+
+  return collaborators.value
+    .filter((item) => {
+      if (!item.birthDate) return false
+
+      //исключить самого себя
+      if (String(item.id) === currentUserId) return false
+
+      const birth = new Date(item.birthDate)
+      return birth.getMonth() === month && birth.getDate() === day
+    })
+    .map((item) => {
+      const birth = new Date(item.birthDate)
+      const age = today.getFullYear() - birth.getFullYear()
+      return { user: item, age }
+    })
+})
+
+function openBirthdayModal(person: CollaboratorDto) {
+  selectedBirthdayUser.value = person
+  birthdayMessage.value = 'С днем рождения!'
+  selectedSticker.value = '🎉'
+  birthdayModalOpen.value = true
+}
+
+function closeBirthdayModal() {
+  birthdayModalOpen.value = false
+  selectedBirthdayUser.value = null
+}
+
+async function sendBirthdayMessage() {
+  if (!selectedBirthdayUser.value) {
+    return
+  }
+  const employeeId = String(selectedBirthdayUser.value.id)
+  const text = `${selectedSticker.value} ${birthdayMessage.value.trim() || 'С днем рождения!'}`
+  await chatsStore.openByEmployee(employeeId)
+  await chatsStore.sendMessage(text)
+  closeBirthdayModal()
+  await router.push({
+    name: 'chats',
+    query: {
+      employeeId,
+      openAt: String(Date.now())
+    }
+  })
+}
 
 const isToday = (day: number | null): boolean => {
   if (!day) return false
@@ -229,37 +299,22 @@ const courses = [
               <div class="birthdays">
                 <p>Сегодня</p>
                 <div class="birthdays-today">
-
-                  <div class="birthday-item">
-                    <div class="birthday-block">
-                      <img class="birthday-photo" src="../assets/images/profile_photo.png">
-                      <div class="birthday-age">27</div>
-                    </div>
-                    <a class="birthday-person">Соколова Наталья Андреевна</a>
+                  <div v-if="birthdayPeople.length === 0" class="birthday-empty">
+                    Сегодня именинников нет
                   </div>
-
-                  <div class="birthday-item">
+                  <div v-for="person in birthdayPeople" :key="person.user.id" class="birthday-item">
                     <div class="birthday-block">
-                      <img class="birthday-photo" src="../assets/images/profile_photo.png">
-                      <div class="birthday-age">32</div>
+                      <img
+                        class="birthday-photo"
+                        :src="person.user.photo
+                          ? `https://localhost:5078/images/collaborators_photo/${person.user.photo}`
+                          : 'https://localhost:5078/images/collaborators_photo/profile_photo.png'"
+                      >
+                      <div class="birthday-age">{{ person.age }}</div>
                     </div>
-                    <a class="birthday-person">Михайлов Кирилл Денисович</a>
-                  </div>
-
-                  <div class="birthday-item">
-                    <div class="birthday-block">
-                      <img class="birthday-photo" src="../assets/images/profile_photo.png">
-                      <div class="birthday-age">31</div>
-                    </div>
-                    <a class="birthday-person">Хмельницкая Софья Юрьевна</a>
-                  </div>
-
-                  <div class="birthday-item">
-                    <div class="birthday-block">
-                      <img class="birthday-photo" src="../assets/images/profile_photo.png">
-                      <div class="birthday-age">22</div>
-                    </div>
-                    <a class="birthday-person">Петкун Диана Олеговна</a>
+                    <button class="birthday-person" @click="openBirthdayModal(person.user)">
+                      {{ person.user.fullName }}
+                    </button>
                   </div>
 
                 </div>
@@ -423,4 +478,31 @@ const courses = [
     </div>
 
   </div>
+
+  <Transition name="modal">
+    <div v-if="birthdayModalOpen" class="birthday-modal-overlay" @click.self="closeBirthdayModal">
+      <div class="birthday-modal">
+        <h3>Поздравить коллегу</h3>
+        <p v-if="selectedBirthdayUser">{{ selectedBirthdayUser.fullName }}</p>
+        <div class="birthday-stickers">
+          <button
+            v-for="sticker in stickerOptions"
+            :key="sticker"
+            class="birthday-sticker"
+            :class="{ active: selectedSticker === sticker }"
+            @click="selectedSticker = sticker"
+          >
+            {{ sticker }}
+          </button>
+        </div>
+        <textarea v-model="birthdayMessage" rows="4" />
+        <div class="birthday-modal-actions">
+          <InverseButton @click="closeBirthdayModal">Отмена</InverseButton>
+          <BaseButton @click="sendBirthdayMessage">Отправить</BaseButton>
+        </div>
+      </div>
+    </div>
+  </Transition>
+
 </template>
+
