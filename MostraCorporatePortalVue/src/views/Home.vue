@@ -261,7 +261,7 @@ const courses = [
 
               <div class="polls">
                 <div class="poll">
-                  <img class="marker-icon" src="../assets/icons/list_marker_icon.svg">
+                  <img class="marker-icon" src="/icons/marker_icon.svg">
                   <div class="poll-info">
                     <a>Обратная связь по корпоративному порталу</a>
                     <p class="poll-status-0">Не завершен</p>
@@ -269,7 +269,7 @@ const courses = [
                 </div>
   
                 <div class="poll">
-                  <img class="marker-icon" src="../assets/icons/list_marker_icon.svg">
+                  <img class="marker-icon" src="/icons/marker_icon.svg">
                   <div class="poll-info">
                     <a>Удовлетворенность условиями работы</a>
                     <p class="poll-status-1">Завершен</p>
@@ -277,7 +277,7 @@ const courses = [
                 </div>
 
                 <div class="poll">
-                  <img class="marker-icon" src="../assets/icons/list_marker_icon.svg">
+                  <img class="marker-icon" src="/icons/marker_icon.svg">
                   <div class="poll-info">
                     <a>Опрос вовлеченности сотрудников</a>
                     <p class="poll-status-1">Завершен</p>

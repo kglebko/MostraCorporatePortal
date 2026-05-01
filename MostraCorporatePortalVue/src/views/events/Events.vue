@@ -477,7 +477,7 @@ const escapeHtml = (str:string):string => {
              }"
              @click="selectEvent(ev.id)">
           <div class="event-title">
-            <img src="@/assets/icons/list_marker_icon.svg">
+            <img src="/icons/list_marker_icon.svg">
             <span v-html="escapeHtml(ev.title)"></span>
           </div>
           <div class="event-date">

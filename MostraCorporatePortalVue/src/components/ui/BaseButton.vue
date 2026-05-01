@@ -53,6 +53,8 @@ const iconPos = props.iconPosition || 'right'
 .btn {
   background: $orange;
   height: fit-content;
+  width: fit-content;
+  min-width: fit-content;
   color: white;
   border: none;
   border-radius: 50px;

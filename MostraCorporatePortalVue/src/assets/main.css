@@ -28,7 +28,7 @@ a:hover{
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
 }
 
@@ -52,9 +52,12 @@ h3{
   max-width: 70%;
 }
 
-.page-header{
+.page-header {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .search-bar {
