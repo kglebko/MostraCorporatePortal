@@ -7,121 +7,135 @@ import { useAuthStore } from '@/stores/auth'
 const chatsStore = useChatsStore()
 const authStore = useAuthStore()
 const router = useRouter()
+
 const messageText = ref('')
 const isInfoOpen = ref(false)
 const messagesContainer = ref<HTMLElement | null>(null)
 
 const groupedMessages = computed(() => {
   const groups = new Map<string, typeof chatsStore.messages>()
+
   chatsStore.messages.forEach((message) => {
     const key = new Date(message.createdAt).toLocaleDateString()
     const existing = groups.get(key) ?? []
     existing.push(message)
     groups.set(key, existing)
   })
+
   return Array.from(groups.entries())
 })
 
 const subtitle = computed(() => {
-  if (!chatsStore.selectedChat) {
-    return ''
-  }
-  if (chatsStore.selectedChat.type === 'Group' || chatsStore.selectedChat.type === 'Department') {
+  if (!chatsStore.selectedChat) return ''
+
+  if (
+    chatsStore.selectedChat.type === 'Group' ||
+    chatsStore.selectedChat.type === 'Department'
+  ) {
     return `${chatsStore.selectedChat.participants.length} участников`
   }
+
   return ''
 })
 
 const chatAvatarPhoto = computed(() => {
-  if (!chatsStore.selectedChat) {
-    return null
-  }
+  if (!chatsStore.selectedChat) return null
 
   const authId = authStore.userClaims?.sub
+
   if (chatsStore.selectedChat.type === 'Direct') {
-    return chatsStore.selectedChat.participants.find((p) => p.userId !== authId)?.photo ?? null
+    return (
+      chatsStore.selectedChat.participants.find(
+        (p) => p.userId !== authId
+      )?.photo ?? null
+    )
   }
+
   return null
 })
 
 const formattedParticipants = computed(() => {
-  if (!chatsStore.selectedChat) {
-    return []
-  }
+  if (!chatsStore.selectedChat) return []
   return chatsStore.selectedChat.participants.map((x) => x.fullName)
 })
 
-const selectedChatListItem = computed(() => {
-  if (!chatsStore.selectedChat) {
-    return null
-  }
-  return chatsStore.chats.find((item) => item.id === chatsStore.selectedChat?.id) ?? null
-})
-
-const canOpenProfile = computed(() => chatsStore.selectedChat?.type === 'Direct')
+const canOpenProfile = computed(
+  () => chatsStore.selectedChat?.type === 'Direct'
+)
 
 const menuStats = computed(() => {
-  if (!chatsStore.selectedChat) {
-    return []
-  }
+  if (!chatsStore.selectedChat) return []
 
   return [
-    { label: 'Тип чата', value: chatsStore.selectedChat.type === 'Direct' ? 'Личный' : 'Групповой' },
-    { label: 'Участников', value: String(chatsStore.selectedChat.participants.length) },
-    { label: 'Сообщений', value: String(chatsStore.messages.length) }
-    /*{ label: 'Непрочитанных', value: String(selectedChatListItem.value?.unreadCount ?? 0) }*/
+    {
+      label: 'Тип чата',
+      value:
+        chatsStore.selectedChat.type === 'Direct'
+          ? 'Личный'
+          : 'Групповой'
+    },
+    {
+      label: 'Участников',
+      value: String(chatsStore.selectedChat.participants.length)
+    },
+    {
+      label: 'Сообщений',
+      value: String(chatsStore.messages.length)
+    }
   ]
 })
 
 const placeholderText = computed(() => {
-  if (chatsStore.draftDirectEmployee) {
-    return 'Нет сообщений'
-  }
+  if (chatsStore.draftDirectEmployee) return 'Нет сообщений'
   return 'Выберите чат и начните общение'
 })
 
 async function onSend() {
-  if (!messageText.value.trim()) {
-    return
-  }
+  if (!messageText.value.trim()) return
+
   await chatsStore.sendMessage(messageText.value)
   messageText.value = ''
 }
 
 async function scrollToBottom() {
   await nextTick()
+  await nextTick()
 
-  if (!messagesContainer.value) {
-    return
-  }
+  const el = messagesContainer.value
+  if (!el) return
 
-  messagesContainer.value.scrollTop =
-    messagesContainer.value.scrollHeight
+  el.scrollTop = el.scrollHeight
 }
 
 watch(
-  () => chatsStore.messages.length,
+  () => chatsStore.messages,
   async () => {
     await scrollToBottom()
-  }
+  },
+  { deep: true, flush: 'post' }
 )
 
 watch(
   () => chatsStore.selectedChat?.id,
   async () => {
     await scrollToBottom()
-  }
+  },
+  { flush: 'post' }
 )
 
 function goToDirectParticipantProfile() {
-  if (chatsStore.selectedChat?.type !== 'Direct') {
-    return
-  }
+  if (chatsStore.selectedChat?.type !== 'Direct') return
 
   const authId = authStore.userClaims?.sub
-  const participant = chatsStore.selectedChat.participants.find((p) => p.userId !== authId)
+  const participant = chatsStore.selectedChat.participants.find(
+    (p) => p.userId !== authId
+  )
+
   if (participant) {
-    router.push({ name: 'employeeDetails', params: { id: participant.userId } })
+    router.push({
+      name: 'employeeDetails',
+      params: { id: participant.userId }
+    })
   }
 }
 </script>
