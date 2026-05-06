@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, watch, onMounted } from 'vue'
 import { useChatsStore } from '@/stores/chats'
 
 const chatsStore = useChatsStore()
@@ -42,6 +42,10 @@ function formatChatTime(dateString?: string | null) {
   })
 }
 
+onMounted(async () => {
+  await chatsStore.bootstrap()
+})
+
 watch(
   () => chatsStore.searchQuery,
   async () => {
@@ -49,7 +53,6 @@ watch(
     await chatsStore.loadEmployees(chatsStore.searchQuery)
   }
 )
-
 </script>
 
 <template>
